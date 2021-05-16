@@ -1,7 +1,12 @@
 import "./App.css";
+import AdminUI from "./Admin UI/AdminUI";
 
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      <AdminUI />
+    </div>
+  );
 }
 
 export default App;
