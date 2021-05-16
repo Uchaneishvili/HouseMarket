@@ -29,7 +29,7 @@ function AdminUI() {
           <div className="logo"></div>
           <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
             <Menu.Item key="1" icon={<UserOutlined />}>
-              Home Management
+              Home List
             </Menu.Item>
           </Menu>
         </Sider>
