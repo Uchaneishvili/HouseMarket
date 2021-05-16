@@ -1,0 +1,50 @@
+th,
+td,
+tr {
+  border: none;
+  text-align: center;
+}
+
+.footer-row-container {
+  display: flex;
+  padding-top: 2%;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 2%;
+}
+
+.footer-col {
+  text-align: center;
+}
+
+.footer-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-container {
+  padding-top: 1%;
+  padding-bottom: 1%;
+  margin-top: 3%;
+}
+
+.footer-col-title {
+  font-weight: 600;
+}
+
+.footer-container {
+  background-color: white;
+}
+
+.footer-row-middle-container {
+  width: 25%;
+  display: flex;
+}
