@@ -11,7 +11,7 @@ const homeSchema = new mongoose.Schema({
     required: true,
   },
   room: {
-    type: String,
+    type: Number,
     required: true,
   },
   floor: {
