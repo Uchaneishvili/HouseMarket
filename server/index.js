@@ -40,6 +40,22 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 /**
  * @swagger
+ * /homelist:
+ *  get:
+ *    description: Use to request all advertisements
+ *    responses:
+ *      '200':
+ *        description: A successfull response
+ *
+ */
+app.get("/homelist", async (res) => {
+  await homeModel.find({}, (result) => {
+    res.status(200).send(result);
+  });
+});
+
+/**
+ * @swagger
  *  definitions:
  *    Home:
  *        type: object
@@ -61,38 +77,16 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 /**
  * @swagger
- * /homelist:
- *  get:
- *    description: Use to request all advertisements
- *    responses:
- *      '200':
- *        description: A successfull response
- *
- */
-app.get("/homelist", async (res) => {
-  await homeModel.find({}, (result) => {
-    res.status(200).send(result);
-  });
-});
-
-/**
- * @swagger
  * /addhome:
  *  post:
- *    description: add new record
- *    consumes:
-      - "application/json"
-      - "application/xml"
-       produces:
-      - "application/json"
-      - "application/xml"
+ *    description: Use to request all advertisements
  *    parameters:
- *      - in: body
- *        name: body
- *        requestBody:
- *            application/json:
- *            schema:
- *              $ref: '#/definitions/Home'
+ *      type: object
+ *      required:
+ *      - image
+ *      - room
+ *      - name
+ *
  *    responses:
  *      '200':
  *        description: A successfull response
