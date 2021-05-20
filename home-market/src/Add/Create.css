@@ -1,9 +1,29 @@
 .add-modal {
-  margin-top: 10%;
+  z-index: 100000;
+}
+
+.create-modal {
+  max-width: none;
+  width: 70%;
+}
+
+.modal-dialog {
+  overflow-y: initial !important;
+}
+.modal-body {
+  height: 80vh;
+  overflow-y: auto;
 }
 
 .form-control {
   margin-top: 10px;
+
+  /* width: 728px;
+  min-width: 723px;
+  border: 1px solid #f0f0f0;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 25px 32px; */
 }
 
 .popup {

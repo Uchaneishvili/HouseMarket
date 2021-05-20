@@ -10,7 +10,7 @@ function Search() {
           <div className="from-range-container">
             <input
               type="range"
-              class="form-range price-range"
+              className="form-range price-range"
               min="0"
               max="5"
               step="0.5"
@@ -24,7 +24,7 @@ function Search() {
           <div className="to-range-container">
             <input
               type="range"
-              class="form-range price-range"
+              className="form-range price-range"
               min="0"
               max="5"
               step="0.5"

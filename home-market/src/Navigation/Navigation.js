@@ -37,7 +37,7 @@ function Navigation() {
         </div>
         <button
           type="button"
-          class="btn btn-outline-success add-advertisement"
+          className="btn btn-outline-success add-advertisement"
           onClick={modalFnct}
         >
           <img src="./icons/fi_plus.svg" alt="add" className="add-icon" />
