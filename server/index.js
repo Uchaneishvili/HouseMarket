@@ -48,10 +48,39 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  *        description: A successfull response
  *
  */
-app.get("/homelist", async (res) => {
-  await homeModel.find({}, (result) => {
-    res.status(200).send(result);
-  });
+app.get("/homelist", async (req, res) => {
+  try {
+    const { search, sortDirection, sortField } = req.query;
+    let querySearch = [];
+    if (search) {
+      querySearch = [{ address: search }];
+    }
+    let query = homeModel.find({});
+
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 12;
+    const skip = (page - 1) * pageSize;
+    const total = await homeModel.countDocuments();
+
+    const pages = Math.ceil(total / pageSize);
+
+    query = query.skip(skip).limit(pageSize);
+    const result = await query;
+
+    res.status(200).json({
+      status: "Success",
+      count: result.length,
+      page,
+      pages,
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "Failed",
+      message: "Server Error ",
+    });
+  }
 });
 
 /**
@@ -93,21 +122,26 @@ app.get("/homelist", async (res) => {
  *
  */
 app.post("/addhome", async (req, res) => {
-  // const { image, name, room, floor, area, address, desc } = req.body;
+  const { image, name, room, floor, area, address, desc, price } = req.body;
 
-  // const homes = new homeModel({
-  //   image: image,
-  //   name: name,
-  //   room: room,
-  //   floor: floor,
-  //   area: area,
-  //   address: address,
-  //   desc: desc,
-  // });
+  const homes = new homeModel({
+    image: image,
+    name: name,
+    room: room,
+    floor: floor,
+    area: area,
+    address: address,
+    desc: desc,
+    price: price,
+  });
 
-  // res.status(200).send(await homes.save(), "inserted data");
-
-  res.send("create");
+  try {
+    await homes.save();
+    res.send("inserted Data 2");
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
 });
 
 /**

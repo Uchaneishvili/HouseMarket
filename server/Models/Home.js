@@ -21,6 +21,10 @@ const homeSchema = new mongoose.Schema({
   area: {
     type: Number,
   },
+  price: {
+    type: Number,
+    // required: true,
+  },
   address: {
     type: String,
     required: true,

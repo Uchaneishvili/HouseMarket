@@ -1,52 +1,81 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Grid.css";
+import InfiniteScroll from "react-infinite-scroll-component";
+import axios from "axios";
+import Navigation from "../Navigation/Navigation";
 
 function Grid() {
-  const generateCardRow = () => {
-    const cardRow = [];
-    for (let row = 1; row <= 4; row++) {
-      cardRow.push(
-        <div className="row grid-row-container">{generateCardColumn()}</div>
-      );
-    }
-    return cardRow;
+  const [listOfHome, setListOfHome] = useState([]);
+  const [totalPages, setTotalPages] = useState();
+  const [currentPage, setCurrentPage] = useState();
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const nextLoad = () => {
+    setTimeout(() => {
+      loadData(currentPage + 1);
+    }, 1500);
   };
 
-  const generateCardColumn = () => {
-    const cardColumn = [];
-    for (let col = 1; col <= 4; col++) {
-      cardColumn.push(
-        <div className="col grid-col-container">
-          <div className="card house-card">
-            <img
-              src="https://assets.architecturaldigest.in/photos/600845b5eebcfd50ede87936/16:9/w_2560%2Cc_limit/Bengaluru-home-Bodhi-Design-Studio-17-1366x768.jpg"
-              className="card-img-top cart-image"
-              alt="..."
-            />
-            <div className="card-body">
-              <p className="card-title">House for sale</p>
-              <p className="card-text desc">
-                47.7 sq.m. apartment for sale on the 5th floor (10 floors in
-                total) Green frame Price: 47 700 $.
-              </p>
-              <div className="dollar-price">
-                <p className="card-text price">47 700</p>
-                <img
-                  className="dollar-sign"
-                  alt="dollar"
-                  src="./icons/fi_dollar-sign.svg"
-                />
-              </div>
-            </div>
-          </div>
+  const loadData = async (page, search) => {
+    let url = `http://localhost:3001/homelist?page=${page}`;
+
+    if (search) {
+      url += `&search=${search}`;
+    }
+
+    await axios.get(url).then((response) => {
+      setListOfHome(response.data.data);
+      setTotalPages(response.data.pages);
+      setCurrentPage(response.data.page);
+    });
+  };
+
+  return (
+    <div>
+      <Navigation loadData={loadData} />
+      <div className="container grid-container">
+        <pre>{JSON.stringify(listOfHome)}</pre>
+        <div className="cards-container">
+          <InfiniteScroll
+            pageStart={0}
+            dataLength={listOfHome.length}
+            next={() => nextLoad()}
+            style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }} //To put endMessage and loader to the top.
+            hasMore={true}
+            loader={<h4>Loading...</h4>}
+          >
+            {listOfHome.map((home) => {
+              return (
+                <div className="card house-card" key={home._id}>
+                  <img
+                    src="https://assets.architecturaldigest.in/photos/600845b5eebcfd50ede87936/16:9/w_2560%2Cc_limit/Bengaluru-home-Bodhi-Design-Studio-17-1366x768.jpg"
+                    className="card-img-top cart-image"
+                    alt="..."
+                  />
+                  <div className="card-body">
+                    <p className="card-title">{home.name}</p>
+                    <div className="home-parameters-container">
+                      <div className="home-parameters">
+                        <p className="card-floor"> სარ. {home.floor}</p>
+                        <p className="card-room"> ოთ. {home.room}</p>
+                      </div>
+
+                      <p className="card-area"> ფართობი: {home.area} მ²</p>
+                    </div>
+                    <p className="card-text desc">{home.desc}</p>
+                    <p className="card-text price">{home.price}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </InfiniteScroll>
         </div>
-      );
-    }
-
-    return cardColumn;
-  };
-
-  return <div className="container grid-container">{generateCardRow()}</div>;
+      </div>
+    </div>
+  );
 }
 
 export default Grid;

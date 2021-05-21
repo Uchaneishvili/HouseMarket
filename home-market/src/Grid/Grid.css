@@ -1,6 +1,10 @@
-.grid-col-container {
-  text-align: center;
-  width: 50rem;
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .grid-container {
@@ -26,16 +30,26 @@
   min-width: 300;
 }
 
+.home-parameters {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .house-card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   cursor: pointer;
-  min-height: 350px;
-  max-height: 350px;
-  height: 350px;
+  min-height: 400px;
+  max-height: 400px;
+  height: 400px;
   width: 300px;
   min-width: 300px;
   max-width: 300px;
+  margin: 10px;
 }
 
 .house-card:hover {
@@ -43,18 +57,35 @@
 }
 .card-title {
   font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   text-align: start;
 }
 
-.dollar-price {
+.home-parameters-container {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-between;
   align-items: center;
 }
-.desc,
-.dollar-price {
+
+.desc {
   text-align: start;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
+.card-floor,
+.card-room,
+.card-area {
+  margin-right: 10px;
+}
 .price {
   font-size: 20px;
   color: #007a3e;

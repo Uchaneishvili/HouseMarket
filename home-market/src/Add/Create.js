@@ -1,18 +1,45 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
-
+import axios from "axios";
 import "./Create.css";
 
 function Create(props) {
   const [modalIsOpen, setmodalIsOpen] = useState(false);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("");
+  const [desc, setDesc] = useState("");
+  const [rooms, setRooms] = useState();
+  const [floor, setFloor] = useState();
+  const [area, setArea] = useState();
+  const [address, setAddress] = useState("");
+  const [price, setPrice] = useState();
+
+  const handleCard = () => {
+    setIsDetailOpen(true);
+  };
 
   useEffect(() => {
     setmodalIsOpen(props.openPopup);
   }, [props.openPopup]);
 
+  const addAdvertisement = async () => {
+    axios.post(`http://localhost:3001/addhome`, {
+      image: "ss",
+      name: name,
+      room: rooms,
+      floor: floor,
+      area: area,
+      address: address,
+      desc: desc,
+    });
+    props.exitModalFnct();
+  };
+
   return (
     <div>
       <Modal
+        style={{ overlay: { zIndex: 1000 } }}
         className="Modal add-modal"
         ariaHideApp={false}
         isOpen={modalIsOpen}
@@ -34,97 +61,135 @@ function Create(props) {
             <div className="modal-body">
               <div className="popup">
                 <div className="category-buttons-add-container">
-                  <button className="btn btn-outline-success category-buttons for-sale">
-                    For Sale
-                  </button>
-                  <button className="btn btn-outline-success category-buttons for-rent">
-                    For Rent
-                  </button>
-                  <button className="btn btn-outline-success category-buttons for-daily-rent">
-                    For Daily Rent
-                  </button>
-                </div>
+                  <div className="label-category-container">
+                    <label className="label-category-buttons">კატეგორია:</label>
+                  </div>
 
-                <div className="type-card">
-                  <div className="card house-card">
-                    <img
-                      src="https://assets.architecturaldigest.in/photos/600845b5eebcfd50ede87936/16:9/w_2560%2Cc_limit/Bengaluru-home-Bodhi-Design-Studio-17-1366x768.jpg"
-                      className="card-img-top cart-image"
-                      alt="..."
-                    />
-                    <div className="card-body">
-                      <p className="card-title">House for sale</p>
-                      <p className="card-text desc">
-                        47.7 sq.m. apartment for sale on the 5th floor (10
-                        floors in total) Green frame Price: 47 700 $.
-                      </p>
-                      <div className="dollar-price">
-                        <p className="card-text price">47 700</p>
-                        <img
-                          className="dollar-sign"
-                          alt="dollar"
-                          src="./icons/fi_dollar-sign.svg"
-                        />
-                      </div>
-                    </div>
+                  <div className="create-modal-category-buttons">
+                    <button className="btn btn-outline-success category-buttons for-sale">
+                      For Sale
+                    </button>
+                    <button className="btn btn-outline-success category-buttons for-rent">
+                      For Rent
+                    </button>
+                    <button className="btn btn-outline-success category-buttons for-daily-rent">
+                      For Daily Rent
+                    </button>
                   </div>
                 </div>
 
-                <form className="popupForm">
-                  <div className="form-group">
-                    <div className="mb-3">
+                <div className="add-type-home">
+                  <button
+                    className="btn btn-outline-success type-button"
+                    onClick={() => handleCard()}
+                  >
+                    კორპუსის ბინა
+                  </button>
+
+                  <button
+                    className="btn btn-outline-success type-button"
+                    onClick={() => handleCard()}
+                  >
+                    კორპუსის ბინა
+                  </button>
+
+                  <button
+                    className="btn btn-outline-success type-button"
+                    onClick={() => handleCard()}
+                  >
+                    კორპუსის ბინა
+                  </button>
+
+                  <button
+                    className="btn btn-outline-success type-button"
+                    onClick={() => handleCard()}
+                  >
+                    კორპუსის ბინა
+                  </button>
+                </div>
+
+                {isDetailOpen && (
+                  <form className="popupForm">
+                    <div className="form-group">
+                      <input
+                        type="number"
+                        className="form-control add-home-info price"
+                        placeholder="$"
+                        name="name"
+                        value={price}
+                        onChange={(event) => setPrice(event.target.value)}
+                      />
+                      <input
+                        type="text"
+                        className="form-control add-home-info name"
+                        placeholder="Enter the name of advertisement"
+                        aria-label="name"
+                        name="name"
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+                      />
+                      <div className="home-parameter">
+                        <input
+                          type="number"
+                          className="form-control add-home-info room"
+                          placeholder="Number of the rooms"
+                          aria-label="name"
+                          name="rooms"
+                          value={rooms}
+                          onChange={(event) => setRooms(event.target.value)}
+                        />
+
+                        <input
+                          type="number"
+                          className="form-control add-home-info floor"
+                          placeholder="Floor"
+                          aria-label="name"
+                          name="floor"
+                          value={floor}
+                          onChange={(event) => setFloor(event.target.value)}
+                        />
+
+                        <input
+                          type="number"
+                          className="form-control add-home-info area"
+                          placeholder="Area"
+                          aria-label="name"
+                          name="area"
+                          value={area}
+                          onChange={(event) => setArea(event.target.value)}
+                        />
+                      </div>
+                      <input
+                        type="text"
+                        className="form-control add-home-info room"
+                        placeholder="Enter the address"
+                        aria-label="name"
+                        name="address"
+                        value={address}
+                        onChange={(event) => setAddress(event.target.value)}
+                      />
+
+                      <textarea
+                        name="desc"
+                        className="form-control add-home-info desc"
+                        placeholder="Enter the description for the advertisement"
+                        value={desc}
+                        onChange={(event) => setDesc(event.target.value)}
+                      />
+
                       <input
                         className="form-control"
                         type="file"
+                        name="image"
                         id="formFile"
                       />
+                      <img
+                        className="uploaded-image"
+                        src="https://image.shutterstock.com/image-vector/vector-illustration-cool-detailed-red-260nw-94498447.jpg"
+                      />
                     </div>
-                    <input
-                      type="text"
-                      className="form-control name"
-                      placeholder="Enter the name of advertisement"
-                      aria-label="name"
-                      name="name"
-                    />
-
-                    <input
-                      type="number"
-                      className="form-control room"
-                      placeholder="Number of the rooms"
-                      aria-label="name"
-                      name="name"
-                    />
-
-                    <input
-                      type="number"
-                      className="form-control room"
-                      placeholder="Floor"
-                      aria-label="name"
-                      name="name"
-                    />
-
-                    <input
-                      type="number"
-                      className="form-control room"
-                      placeholder="Area"
-                      aria-label="name"
-                      name="name"
-                    />
-
-                    <input
-                      type="text"
-                      className="form-control room"
-                      placeholder="Enter the address"
-                      aria-label="name"
-                      name="name"
-                    />
-
-                    <textarea
-                      className="form-control desc"
-                      placeholder="Enter the description for the advertisement"
-                    />
-                  </div>
-                </form>
+                  </form>
+                )}
               </div>
             </div>
 
@@ -137,7 +202,11 @@ function Create(props) {
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => addAdvertisement()}
+              >
                 Save changes
               </button>
             </div>

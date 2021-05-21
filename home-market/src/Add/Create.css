@@ -1,29 +1,70 @@
-.add-modal {
-  z-index: 100000;
+.type-button {
+  cursor: pointer;
+  padding: 20px 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0 10px 20px 0 rgb(55 58 64 / 5%);
+  border: 1px solid #007a3e;
+  margin: 5px;
+  font-size: 14px;
+  width: 120px;
 }
 
+.home-parameter {
+  display: flex;
+}
+
+.label-category-container {
+  display: flex;
+}
+
+.label-category-buttons {
+  font-weight: 600;
+  margin-right: 70px;
+}
+
+.category-buttons-add-container {
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+}
+
+.add-home-info {
+  margin: 2px;
+  height: 40px;
+  color: #020202;
+  font-size: 16px;
+  padding-left: 32px;
+  border-radius: 50px;
+}
+.uploaded-image {
+  margin-top: 5px;
+}
+.add-type-home {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+}
 .create-modal {
   max-width: none;
-  width: 70%;
+  width: 50%;
 }
 
 .modal-dialog {
   overflow-y: initial !important;
 }
 .modal-body {
-  height: 80vh;
+  max-height: 80vh;
   overflow-y: auto;
 }
 
 .form-control {
   margin-top: 10px;
-
-  /* width: 728px;
-  min-width: 723px;
-  border: 1px solid #f0f0f0;
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 25px 32px; */
 }
 
 .popup {

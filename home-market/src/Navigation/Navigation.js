@@ -3,9 +3,11 @@ import "./Navigation.css";
 import CreateNew from "../Add/Create.js";
 import Search from "../Search/Search";
 
-function Navigation() {
+function Navigation(props) {
   const [openPopup, setOpenPopup] = useState(false);
   const [detailSearch, setDetailSearch] = useState(false);
+  const [search, setSearch] = useState("");
+  const [defaultValue, setDefaultValue] = useState(false);
 
   const modalFnct = () => {
     setOpenPopup(true);
@@ -19,6 +21,14 @@ function Navigation() {
     setDetailSearch(true);
   };
 
+  // const searchInput = (event) => {
+  //   if (defaultValue) {
+  //     setSearch("");
+  //   } else {
+  //     setSearch(event.target.value);
+  //   }
+  // };
+
   return (
     <div className="header">
       <div className="container header-navigation">
@@ -29,9 +39,16 @@ function Navigation() {
             placeholder="Search"
             name="searchinput"
             id="search-input"
+            value={search}
             onClick={() => searchOnclick()}
+            onChange={(event) =>
+              defaultValue ? setSearch("") : setSearch(event.target.value)
+            }
           />
-          <div className="search-icon-container">
+          <div
+            className="search-icon-container"
+            onClick={() => props.loadData(1, search)}
+          >
             <img src="./icons/search-icon.svg" className="search-main-icon" />
           </div>
         </div>
