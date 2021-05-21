@@ -49,36 +49,81 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  *
  */
 app.get("/homelist", async (req, res) => {
+  //Read
   try {
-    const { search, sortDirection, sortField } = req.query;
-    let querySearch = [];
-    if (search) {
-      querySearch = [{ address: search }];
+    const { search, sortDirection, sortField, floor, room, area, address } =
+      req.query;
+    const q = {};
+    q["$or"];
+
+    if (floor) {
+      floor.split(",").forEach((value) => {
+        if (!q["$or"]) {
+          q["$or"] = [{ floor: value }];
+        } else {
+          q["$or"].push({ floor: value });
+        }
+      });
     }
-    let query = homeModel.find({});
+
+    if (room) {
+      room.split(",").forEach((value) => {
+        if (!q["$or"]) {
+          q["$or"] = [{ room: value }];
+        } else {
+          q["$or"].push({ room: value });
+        }
+      });
+    }
+
+    if (area) {
+      area.split(",").forEach((value) => {
+        if (!q["$or"]) {
+          q["$or"] = [{ area: value }];
+        } else {
+          q["$or"].push({ area: value });
+        }
+      });
+    }
+
+    if (search) {
+      if (!q["$or"]) {
+        q["$or"] = [{ address: search }, { name: search }];
+      } else {
+        q["$or"].push({ address: search });
+        q["$or"].push({ name: search });
+      }
+    }
+
+    const sortInHome = {};
+
+    if (sortField && sortDirection != "undefined") {
+      sortInHome[sortField] = sortDirection === "ascend" ? 1 : -1;
+    }
 
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 12;
     const skip = (page - 1) * pageSize;
-    const total = await homeModel.countDocuments();
+    const total = await homeModel.countDocuments(q);
 
-    const pages = Math.ceil(total / pageSize);
-
-    query = query.skip(skip).limit(pageSize);
-    const result = await query;
+    const result = await homeModel
+      .find(q)
+      .sort(sortInHome)
+      .skip(skip)
+      .limit(pageSize);
 
     res.status(200).json({
       status: "Success",
       count: total,
       page,
-      pages,
       data: result,
     });
   } catch (error) {
     console.log(error);
+
     res.status(500).json({
       status: "Failed",
-      message: "Server Error ",
+      message: "Server Error",
     });
   }
 });
@@ -154,8 +199,11 @@ app.post("/addhome", async (req, res) => {
  *        description: A successfull response
  *
  */
-app.delete("/delete:id", (req, res) => {
-  res.send("deleted record");
+app.delete("/delete:id", async (req, res) => {
+  const id = req.params.id;
+
+  await homeModel.findByIdAndRemove(id).exec();
+  res.send("deleted");
 });
 
 /**

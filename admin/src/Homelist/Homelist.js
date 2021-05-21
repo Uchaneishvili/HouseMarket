@@ -11,16 +11,41 @@ function Homelist() {
   const [homeData, setHomeData] = useState();
   const [current, setCurrent] = useState(1);
   const [total, setTotal] = useState();
+  const [searchVal, setSearchVal] = useState();
 
   useEffect(() => {
     loadData();
   }, []);
 
-  const loadData = async (page, search) => {
+  const deleteAdvertisement = async (id) => {
+    await axios.delete(`http://localhost:3001/delete/${id}`);
+    loadData(current);
+
+    console.log(id);
+  };
+
+  const loadData = async (
+    page,
+    search,
+    sortField,
+    sortDirection,
+    filterFields
+  ) => {
     let url = `http://localhost:3001/homelist?page=${page}`;
 
     if (search) {
       url += `&search=${search}`;
+    }
+
+    if (sortField) {
+      url += `&sortField=${sortField}&sortDirection=${sortDirection}`;
+    }
+
+    if (filterFields) {
+      Object.keys(filterFields).forEach((key) => {
+        const joinedFilterValue = filterFields[key]?.join();
+        url += `&${key}=${joinedFilterValue}`;
+      });
     }
 
     await axios.get(url).then((response) => {
@@ -30,38 +55,53 @@ function Homelist() {
     });
   };
 
+  const resetSearch = () => {
+    loadData(1, "");
+    setSearchVal("");
+  };
+
   const columns = [
     {
       title: "ID",
       dataIndex: "_id",
-      width: "20%",
+      width: "250px",
     },
     {
       title: "Name",
       dataIndex: "name",
-      width: "20%",
+      width: "500px",
     },
     {
       title: "Floor",
       dataIndex: "floor",
-      width: "10%",
+      width: "150px",
+      sorter: true,
     },
     {
       title: "Room",
       dataIndex: "room",
-      width: "10%",
+      width: "150px",
+      sorter: true,
     },
     {
       title: "Area",
       dataIndex: "area",
-      width: "10%",
+      width: "150px",
+      sorter: true,
+    },
+
+    {
+      title: "Address",
+      dataIndex: "address",
+      width: "250px",
     },
 
     {
       title: "Type",
       dataIndex: "type",
+      width: "150px",
       filters: [
-        { text: "For Sale", value: "for sale" },
+        { text: "For Sale", value: "for   sale" },
         { text: "For Rent", value: "for rent" },
         { text: "For Daily Rent", value: "for daily rent" },
       ],
@@ -69,27 +109,29 @@ function Homelist() {
     {
       title: "Description",
       dataIndex: "desc",
-      width: "30%",
+      width: "500px",
     },
 
     {
       title: "Action",
-      dataIndex: "_id",
-      width: "10%",
-
+      dataIndex: "action",
+      width: "150px",
       fixed: "right",
-      render: () => {
+      render: (id) => (
         <div>
-          <Button>
+          <Button
+            className="delete-button"
+            onClick={() => deleteAdvertisement(homeData._id)}
+          >
             <DeleteOutlined />
           </Button>
-        </div>;
-      },
+        </div>
+      ),
     },
   ];
 
-  const handleTableChange = (pagination) => {
-    loadData(pagination.current, "");
+  const handleTableChange = (pagination, sorter) => {
+    loadData(pagination, "", sorter.field, sorter.order);
   };
 
   return (
@@ -121,8 +163,11 @@ function Homelist() {
               placeholder="input search text"
               enterButton="Search"
               size="large"
+              value={searchVal}
+              onChange={(event) => setSearchVal(event.target.value)}
+              onSearch={() => loadData(1, searchVal)}
             />
-            <Button type="primary" size="large">
+            <Button type="primary" size="large" onClick={() => resetSearch()}>
               Clear
             </Button>
           </div>
