@@ -69,7 +69,7 @@ app.get("/homelist", async (req, res) => {
 
     res.status(200).json({
       status: "Success",
-      count: result.length,
+      count: total,
       page,
       pages,
       data: result,

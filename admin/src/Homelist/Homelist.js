@@ -1,21 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Homelist.css";
 import { Layout, Breadcrumb } from "antd";
-import { HomeOutlined } from "@ant-design/icons";
+import { HomeOutlined, DeleteOutlined } from "@ant-design/icons";
+import axios from "axios";
 import { Table, Input, Button } from "antd";
 const { Search } = Input;
 
 function Homelist() {
   const { Header } = Layout;
+  const [homeData, setHomeData] = useState();
+  const [current, setCurrent] = useState(1);
+  const [total, setTotal] = useState();
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async (page, search) => {
+    let url = `http://localhost:3001/homelist?page=${page}`;
+
+    if (search) {
+      url += `&search=${search}`;
+    }
+
+    await axios.get(url).then((response) => {
+      setHomeData(response.data.data);
+      setTotal(response.data.count);
+      setCurrent(response.data.page);
+    });
+  };
 
   const columns = [
     {
-      title: "Photo",
-      dataIndex: "photo",
+      title: "ID",
+      dataIndex: "_id",
+      width: "20%",
     },
     {
       title: "Name",
       dataIndex: "name",
+      width: "20%",
+    },
+    {
+      title: "Floor",
+      dataIndex: "floor",
+      width: "10%",
+    },
+    {
+      title: "Room",
+      dataIndex: "room",
+      width: "10%",
+    },
+    {
+      title: "Area",
+      dataIndex: "area",
+      width: "10%",
     },
 
     {
@@ -29,16 +68,29 @@ function Homelist() {
     },
     {
       title: "Description",
-      dataIndex: "description",
+      dataIndex: "desc",
       width: "30%",
     },
 
     {
       title: "Action",
-      dataIndex: "action",
+      dataIndex: "_id",
+      width: "10%",
+
       fixed: "right",
+      render: () => {
+        <div>
+          <Button>
+            <DeleteOutlined />
+          </Button>
+        </div>;
+      },
     },
   ];
+
+  const handleTableChange = (pagination) => {
+    loadData(pagination.current, "");
+  };
 
   return (
     <div>
@@ -76,13 +128,12 @@ function Homelist() {
           </div>
           <Table
             columns={columns}
-            rowKey={(record) => record.login.uuid}
             scroll={{ x: 1300 }}
             style={{ marginTop: 20 }}
-            //   dataSource={}
-            //   pagination={{ current: current, pageSize: 10, total: total }}
-            //   loading={loading}
-            //   onChange={this.handleTableChange}
+            dataSource={homeData}
+            rowKey={(home) => home._id}
+            pagination={{ current: current, pageSize: 12, total: total }}
+            onChange={() => handleTableChange()}
           />
         </div>
       </div>
