@@ -51,8 +51,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.get("/homelist", async (req, res) => {
   //Read
   try {
-    const { search, sortDirection, sortField, floor, room, area, address } =
-      req.query;
+    const { search, sortDirection, sortField, floor, room, area } = req.query;
     const q = {};
     q["$or"];
 
@@ -105,6 +104,7 @@ app.get("/homelist", async (req, res) => {
     const pageSize = parseInt(req.query.pageSize) || 12;
     const skip = (page - 1) * pageSize;
     const total = await homeModel.countDocuments(q);
+    const pages = Math.ceil(total / pageSize);
 
     const result = await homeModel
       .find(q)
@@ -115,6 +115,7 @@ app.get("/homelist", async (req, res) => {
     res.status(200).json({
       status: "Success",
       count: total,
+      pages,
       page,
       data: result,
     });

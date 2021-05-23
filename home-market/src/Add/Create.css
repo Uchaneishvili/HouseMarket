@@ -7,6 +7,12 @@
   margin: 5px;
   font-size: 14px;
   width: 120px;
+  height: 100px;
+}
+
+.is-selected {
+  background-color: #007a3e;
+  color: white;
 }
 
 .home-parameter {

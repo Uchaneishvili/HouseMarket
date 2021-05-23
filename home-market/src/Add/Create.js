@@ -12,7 +12,6 @@ function Create(props) {
   const [modalIsOpen, setmodalIsOpen] = useState(false);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
   const [desc, setDesc] = useState("");
   const [rooms, setRooms] = useState();
   const [floor, setFloor] = useState();
@@ -21,9 +20,13 @@ function Create(props) {
   const [price, setPrice] = useState();
   const [fileUrl, setFileUrl] = useState();
   const [homes, setHomes] = useState([]);
+  const [isSelected, setIsSelected] = useState(false);
 
-  const handleCard = () => {
+  const handleCard = (number) => {
     setIsDetailOpen(true);
+    console.log(number);
+    setIsSelected(!isSelected);
+    console.log(isSelected);
   };
 
   useEffect(() => {
@@ -40,13 +43,16 @@ function Create(props) {
 
   const addAdvertisement = async (e) => {
     axios.post(`http://localhost:3001/addhome`, {
-      image: fileUrl,
+      image:
+        fileUrl ||
+        "https://globalimpactnetwork.org/wp-content/themes/globalimpact/images/no-image-found-360x250.png",
       name: name,
       room: rooms,
       floor: floor,
       area: area,
       address: address,
       desc: desc,
+      price: price,
     });
     props.exitModalFnct();
     const imgName = e.target.name.value;
@@ -118,31 +124,47 @@ function Create(props) {
 
                 <div className="add-type-home">
                   <button
-                    className="btn btn-outline-success type-button"
-                    onClick={() => handleCard()}
+                    className={
+                      isSelected
+                        ? "btn btn-outline-success type-button is-selected"
+                        : "btn btn-outline-success type-button  "
+                    }
+                    onClick={() => handleCard(1)}
                   >
                     კორპუსის ბინა
                   </button>
 
                   <button
-                    className="btn btn-outline-success type-button"
-                    onClick={() => handleCard()}
+                    className={
+                      isSelected
+                        ? "btn btn-outline-success type-button is-selected"
+                        : "btn btn-outline-success type-button  "
+                    }
+                    onClick={() => handleCard(2)}
                   >
-                    კორპუსის ბინა
+                    კერძო სახლი
                   </button>
 
                   <button
-                    className="btn btn-outline-success type-button"
-                    onClick={() => handleCard()}
+                    className={
+                      isSelected
+                        ? "btn btn-outline-success type-button is-selected"
+                        : "btn btn-outline-success type-button  "
+                    }
+                    onClick={() => handleCard(3)}
                   >
-                    კორპუსის ბინა
+                    კომერციული ფართი
                   </button>
 
                   <button
-                    className="btn btn-outline-success type-button"
-                    onClick={() => handleCard()}
+                    className={
+                      isSelected
+                        ? "btn btn-outline-success type-button is-selected"
+                        : "btn btn-outline-success type-button  "
+                    }
+                    onClick={() => handleCard(4)}
                   >
-                    კორპუსის ბინა
+                    სხვა
                   </button>
                 </div>
 

@@ -70,6 +70,12 @@ function Homelist() {
       width: "500px",
     },
     {
+      title: "Price ($)",
+      dataIndex: "price",
+      width: "150px",
+      sorter: true,
+    },
+    {
       title: "Floor",
       dataIndex: "floor",
       width: "150px",
@@ -129,7 +135,7 @@ function Homelist() {
   ];
 
   const handleTableChange = (pagination, sorter) => {
-    loadData(pagination, "", sorter.field, sorter.order);
+    loadData(pagination, "", sorter.field, sorter.direction);
   };
 
   return (
