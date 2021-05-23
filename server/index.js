@@ -199,7 +199,7 @@ app.post("/addhome", async (req, res) => {
  *        description: A successfull response
  *
  */
-app.delete("/delete:id", async (req, res) => {
+app.delete("/delete/:id", async (req, res) => {
   const id = req.params.id;
 
   await homeModel.findByIdAndRemove(id).exec();

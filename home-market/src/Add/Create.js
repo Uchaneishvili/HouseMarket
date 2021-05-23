@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import "./Create.css";
+import { app } from "../base";
+import firebase from "firebase/app";
+import "firebase/firestore";
+
+const db = app.firestore();
 
 function Create(props) {
   const [modalIsOpen, setmodalIsOpen] = useState(false);
@@ -14,6 +19,8 @@ function Create(props) {
   const [area, setArea] = useState();
   const [address, setAddress] = useState("");
   const [price, setPrice] = useState();
+  const [fileUrl, setFileUrl] = useState();
+  const [homes, setHomes] = useState([]);
 
   const handleCard = () => {
     setIsDetailOpen(true);
@@ -23,9 +30,17 @@ function Create(props) {
     setmodalIsOpen(props.openPopup);
   }, [props.openPopup]);
 
-  const addAdvertisement = async () => {
+  const onChange = async (e) => {
+    const file = e.target.files[0];
+    const storageRef = app.storage().ref();
+    const fileRef = storageRef.child(file.name);
+    await fileRef.put(file);
+    setFileUrl(await fileRef.getDownloadURL());
+  };
+
+  const addAdvertisement = async (e) => {
     axios.post(`http://localhost:3001/addhome`, {
-      image: "ss",
+      image: fileUrl,
       name: name,
       room: rooms,
       floor: floor,
@@ -34,7 +49,30 @@ function Create(props) {
       desc: desc,
     });
     props.exitModalFnct();
+    const imgName = e.target.name.value;
+    if (!imgName) {
+      return;
+    }
+
+    db.collection("home-market-98990-default-rtdb").doc(imgName).set({
+      name: imgName,
+      image: fileUrl,
+    });
   };
+
+  useEffect(() => {
+    const fetchHomes = async () => {
+      const homesCollection = await db
+        .collection("home-market-98990-default-rtdb")
+        .get();
+      setHomes(
+        homesCollection.docs.map((doc) => {
+          return doc.data;
+        })
+      );
+    };
+    fetchHomes();
+  }, []);
 
   return (
     <div>
@@ -182,11 +220,9 @@ function Create(props) {
                         type="file"
                         name="image"
                         id="formFile"
+                        onChange={onChange}
                       />
-                      <img
-                        className="uploaded-image"
-                        src="https://image.shutterstock.com/image-vector/vector-illustration-cool-detailed-red-260nw-94498447.jpg"
-                      />
+                      <img className="uploaded-image" src={fileUrl} />
                     </div>
                   </form>
                 )}
@@ -205,7 +241,7 @@ function Create(props) {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => addAdvertisement()}
+                onClick={addAdvertisement}
               >
                 Save changes
               </button>

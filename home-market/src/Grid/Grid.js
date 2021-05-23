@@ -51,9 +51,11 @@ function Grid() {
               return (
                 <div className="card house-card" key={home._id}>
                   <img
-                    src="https://assets.architecturaldigest.in/photos/600845b5eebcfd50ede87936/16:9/w_2560%2Cc_limit/Bengaluru-home-Bodhi-Design-Studio-17-1366x768.jpg"
+                    width="300px"
+                    height="170px"
+                    src={home.image}
                     className="card-img-top cart-image"
-                    alt="..."
+                    alt={home.name}
                   />
                   <div className="card-body">
                     <p className="card-title">{home.name}</p>
