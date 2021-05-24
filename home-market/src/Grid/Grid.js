@@ -59,6 +59,7 @@ function Grid() {
                 />
                 <div className="card-body">
                   <p className="card-title">{home.name}</p>
+                  <p className="card-category">{home.category}</p>
                   <div className="home-parameters-container">
                     <div className="home-parameters">
                       <p className="card-floor"> სარ. {home.floor}</p>

@@ -69,6 +69,7 @@ function Homelist() {
       dataIndex: "name",
       width: "500px",
     },
+
     {
       title: "Price ($)",
       dataIndex: "price",
@@ -93,16 +94,14 @@ function Homelist() {
       width: "150px",
       sorter: true,
     },
-
     {
       title: "Address",
       dataIndex: "address",
       width: "250px",
     },
-
     {
       title: "Type",
-      dataIndex: "type",
+      dataIndex: "category",
       width: "150px",
       filters: [
         { text: "For Sale", value: "for   sale" },
@@ -136,6 +135,7 @@ function Homelist() {
 
   const handleTableChange = (pagination, sorter) => {
     loadData(pagination, "", sorter.field, sorter.direction);
+    console.log("test");
   };
 
   return (
@@ -183,7 +183,7 @@ function Homelist() {
             dataSource={homeData}
             rowKey={(home) => home._id}
             pagination={{ current: current, pageSize: 12, total: total }}
-            onChange={() => handleTableChange()}
+            onChange={handleTableChange}
           />
         </div>
       </div>

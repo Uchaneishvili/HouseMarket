@@ -1,8 +1,14 @@
 const mongoose = require("mongoose");
 const homeSchema = new mongoose.Schema({
+  category: {
+    type: String,
+    required: true,
+  },
+  typeCard: {
+    type: String,
+    required: true,
+  },
   image: {
-    // data: Buffer,
-    // contentType: String,
     type: String,
     required: true,
   },
@@ -15,7 +21,7 @@ const homeSchema = new mongoose.Schema({
     required: true,
   },
   floor: {
-    type: String,
+    type: Number,
     required: true,
   },
   area: {

@@ -168,9 +168,22 @@ app.get("/homelist", async (req, res) => {
  *
  */
 app.post("/addhome", async (req, res) => {
-  const { image, name, room, floor, area, address, desc, price } = req.body;
+  const {
+    image,
+    name,
+    room,
+    floor,
+    area,
+    address,
+    desc,
+    price,
+    typeCard,
+    category,
+  } = req.body;
 
   const homes = new homeModel({
+    category: category,
+    typeCard: typeCard,
     image: image,
     name: name,
     room: room,
