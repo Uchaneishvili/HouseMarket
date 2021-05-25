@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Navigation.css";
 import CreateNew from "../Add/Create.js";
 import Search from "../Search/Search";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 function Navigation(props) {
   const [openPopup, setOpenPopup] = useState(false);
@@ -17,22 +18,31 @@ function Navigation(props) {
     setOpenPopup(false);
   };
 
-  const searchOnclick = () => {
+  const searchOnclick = (e) => {
     setDetailSearch(true);
   };
 
-  // const searchInput = (event) => {
-  //   if (defaultValue) {
-  //     setSearch("");
-  //   } else {
-  //     setSearch(event.target.value);
-  //   }
-  // };
+  console.log(search);
 
+  const onSearch = () => {
+    props.loadData(1, search);
+    setDetailSearch(false);
+  };
+
+  const onMainTitle = () => {
+    props.loadData(1, "");
+    setSearch("");
+  };
   return (
     <div className="header">
       <div className="container header-navigation">
-        <h4 className="app-name">APP NAME</h4>
+        <Router>
+          <Link to="/">
+            <h4 className="app-name" onClick={() => onMainTitle()}>
+              APP NAME
+            </h4>
+          </Link>
+        </Router>
         <div className="search">
           <input
             className="search-input"
@@ -45,10 +55,7 @@ function Navigation(props) {
               defaultValue ? setSearch("") : setSearch(event.target.value)
             }
           />
-          <div
-            className="search-icon-container"
-            onClick={() => props.loadData(1, search)}
-          >
+          <div className="search-icon-container" onClick={() => onSearch()}>
             <img src="./icons/search-icon.svg" className="search-main-icon" />
           </div>
         </div>

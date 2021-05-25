@@ -51,8 +51,13 @@
 
 .app-name {
   cursor: pointer;
+  color: #00783f;
 }
 
+a {
+  color: #00783f;
+  text-decoration: none;
+}
 .search-input::placeholder {
   color: #a0a0a0;
   font-size: 14px;
