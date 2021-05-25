@@ -20,12 +20,14 @@ function Create(props) {
   const [price, setPrice] = useState();
   const [fileUrl, setFileUrl] = useState();
   const [homes, setHomes] = useState([]);
-  const [isSelected, setIsSelected] = useState(false);
+  const [isSelected, setIsSelected] = useState();
+  const [isSelectedCategory, setIsSelectedCategory] = useState();
   const [categoryName, setCategoryName] = useState();
   const [cardName, setCardName] = useState();
 
   const handleCard = (title) => {
     setIsDetailOpen(true);
+    setIsSelected(title);
     setCardName(title); // 1 - კორპ.ბინა 2 - კერძო სახლი 3 - კომ.ფართი 4 - სხვა
   };
 
@@ -85,7 +87,8 @@ function Create(props) {
   }, []);
 
   const handleCategory = (title) => {
-    setCategoryName(title); // 1 - For Sale, 2 - For Rent, 3 - For Daily Rent
+    setCategoryName(title);
+    setIsSelectedCategory(title);
   };
 
   return (
@@ -120,73 +123,86 @@ function Create(props) {
 
                   <div className="create-modal-category-buttons">
                     <button
-                      className="btn btn-outline-success category-buttons for-sale"
+                      className={
+                        isSelectedCategory == "For Sale"
+                          ? "btn btn-outline-success category-buttons for-sale is-selected"
+                          : "btn btn-outline-success category-buttons for-sale"
+                      }
                       onClick={() => handleCategory("For Sale")}
                     >
                       For Sale
                     </button>
                     <button
-                      className="btn btn-outline-success category-buttons for-rent"
+                      className={
+                        isSelectedCategory == "For Rent"
+                          ? "btn btn-outline-success category-buttons for-sale is-selected"
+                          : "btn btn-outline-success category-buttons for-sale"
+                      }
                       onClick={() => handleCategory("For Rent")}
                     >
                       For Rent
                     </button>
                     <button
-                      className="btn btn-outline-success category-buttons for-daily-rent"
+                      className={
+                        isSelectedCategory == "For Daily Rent"
+                          ? "btn btn-outline-success category-buttons for-sale is-selected"
+                          : "btn btn-outline-success category-buttons for-sale"
+                      }
                       onClick={() => handleCategory("For Daily Rent")}
                     >
                       For Daily Rent
                     </button>
                   </div>
                 </div>
+                {isSelectedCategory && (
+                  <div className="add-type-home">
+                    <button
+                      className={
+                        isSelected == "კორპუსის ბინა"
+                          ? "btn btn-outline-success type-button is-selected"
+                          : "btn btn-outline-success type-button"
+                      }
+                      onClick={() => handleCard("კორპუსის ბინა")}
+                    >
+                      კორპუსის ბინა
+                    </button>
 
-                <div className="add-type-home">
-                  <button
-                    className={
-                      isSelected
-                        ? "btn btn-outline-success type-button is-selected"
-                        : "btn btn-outline-success type-button  "
-                    }
-                    onClick={() => handleCard("კორპუსის ბინა")}
-                  >
-                    კორპუსის ბინა
-                  </button>
+                    <button
+                      className={
+                        isSelected == "კერძო სახლი"
+                          ? "btn btn-outline-success type-button is-selected"
+                          : "btn btn-outline-success type-button  "
+                      }
+                      onClick={() => handleCard("კერძო სახლი")}
+                    >
+                      კერძო სახლი
+                    </button>
 
-                  <button
-                    className={
-                      isSelected
-                        ? "btn btn-outline-success type-button is-selected"
-                        : "btn btn-outline-success type-button  "
-                    }
-                    onClick={() => handleCard("კერძო სახლი")}
-                  >
-                    კერძო სახლი
-                  </button>
+                    <button
+                      className={
+                        isSelected == "კომერციული ფართი"
+                          ? "btn btn-outline-success type-button is-selected"
+                          : "btn btn-outline-success type-button  "
+                      }
+                      onClick={() => handleCard("კომერციული ფართი")}
+                    >
+                      კომერციული ფართი
+                    </button>
 
-                  <button
-                    className={
-                      isSelected
-                        ? "btn btn-outline-success type-button is-selected"
-                        : "btn btn-outline-success type-button  "
-                    }
-                    onClick={() => handleCard("კომერციული ფართი")}
-                  >
-                    კომერციული ფართი
-                  </button>
+                    <button
+                      className={
+                        isSelected == "სხვა"
+                          ? "btn btn-outline-success type-button is-selected"
+                          : "btn btn-outline-success type-button  "
+                      }
+                      onClick={() => handleCard("სხვა")}
+                    >
+                      სხვა
+                    </button>
+                  </div>
+                )}
 
-                  <button
-                    className={
-                      isSelected
-                        ? "btn btn-outline-success type-button is-selected"
-                        : "btn btn-outline-success type-button  "
-                    }
-                    onClick={() => handleCard("სხვა")}
-                  >
-                    სხვა
-                  </button>
-                </div>
-
-                {isDetailOpen && (
+                {isSelected && (
                   <form className="popupForm">
                     <div className="form-group">
                       <input
