@@ -3,14 +3,12 @@ import Modal from "react-modal";
 import axios from "axios";
 import "./Create.css";
 import { app } from "../base";
-import firebase from "firebase/app";
 import "firebase/firestore";
 
 const db = app.firestore();
 
 function Create(props) {
   const [modalIsOpen, setmodalIsOpen] = useState(false);
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [rooms, setRooms] = useState();
@@ -26,7 +24,6 @@ function Create(props) {
   const [cardName, setCardName] = useState();
 
   const handleCard = (title) => {
-    setIsDetailOpen(true);
     setIsSelected(title);
     setCardName(title); // 1 - კორპ.ბინა 2 - კერძო სახლი 3 - კომ.ფართი 4 - სხვა
   };
@@ -68,7 +65,6 @@ function Create(props) {
       name: imgName,
       image: fileUrl,
     });
-    console.log("loadData");
     props.loadData(1);
   };
 
@@ -124,7 +120,7 @@ function Create(props) {
                   <div className="create-modal-category-buttons">
                     <button
                       className={
-                        isSelectedCategory == "For Sale"
+                        isSelectedCategory === "For Sale"
                           ? "btn btn-outline-success category-buttons for-sale is-selected"
                           : "btn btn-outline-success category-buttons for-sale"
                       }
@@ -134,7 +130,7 @@ function Create(props) {
                     </button>
                     <button
                       className={
-                        isSelectedCategory == "For Rent"
+                        isSelectedCategory === "For Rent"
                           ? "btn btn-outline-success category-buttons for-sale is-selected"
                           : "btn btn-outline-success category-buttons for-sale"
                       }
@@ -144,7 +140,7 @@ function Create(props) {
                     </button>
                     <button
                       className={
-                        isSelectedCategory == "For Daily Rent"
+                        isSelectedCategory === "For Daily Rent"
                           ? "btn btn-outline-success category-buttons for-sale is-selected"
                           : "btn btn-outline-success category-buttons for-sale"
                       }
@@ -158,7 +154,7 @@ function Create(props) {
                   <div className="add-type-home">
                     <button
                       className={
-                        isSelected == "კორპუსის ბინა"
+                        isSelected === "კორპუსის ბინა"
                           ? "btn btn-outline-success type-button is-selected"
                           : "btn btn-outline-success type-button"
                       }
@@ -169,7 +165,7 @@ function Create(props) {
 
                     <button
                       className={
-                        isSelected == "კერძო სახლი"
+                        isSelected === "კერძო სახლი"
                           ? "btn btn-outline-success type-button is-selected"
                           : "btn btn-outline-success type-button  "
                       }
@@ -180,7 +176,7 @@ function Create(props) {
 
                     <button
                       className={
-                        isSelected == "კომერციული ფართი"
+                        isSelected === "კომერციული ფართი"
                           ? "btn btn-outline-success type-button is-selected"
                           : "btn btn-outline-success type-button  "
                       }
@@ -191,7 +187,7 @@ function Create(props) {
 
                     <button
                       className={
-                        isSelected == "სხვა"
+                        isSelected === "სხვა"
                           ? "btn btn-outline-success type-button is-selected"
                           : "btn btn-outline-success type-button  "
                       }
@@ -278,7 +274,11 @@ function Create(props) {
                         id="formFile"
                         onChange={onChange}
                       />
-                      <img className="uploaded-image" src={fileUrl} />
+                      <img
+                        className="uploaded-image"
+                        alt="uploaded"
+                        src={fileUrl}
+                      />
                     </div>
                   </form>
                 )}

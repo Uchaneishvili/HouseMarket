@@ -7,11 +7,12 @@ import Navigation from "../Navigation/Navigation";
 function Grid() {
   const [listOfHome, setListOfHome] = useState([]);
   const [totalPages, setTotalPages] = useState();
-  const [currentPage, setCurrentPage] = useState();
+  const [loadMore, setLoadMore] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    loadData();
-  }, []);
+    loadData(1);
+  });
 
   const nextLoad = () => {
     setTimeout(() => {
@@ -21,15 +22,18 @@ function Grid() {
 
   const loadData = async (page, search) => {
     let url = `http://localhost:3001/homelist?page=${page}`;
-
     if (search) {
       url += `&search=${search}`;
     }
-
     await axios.get(url).then((response) => {
       setListOfHome(response.data.data);
       setTotalPages(response.data.pages);
       setCurrentPage(response.data.page);
+      if (totalPages > currentPage) {
+        setLoadMore(true);
+      } else {
+        setLoadMore(false);
+      }
     });
   };
 
@@ -44,7 +48,7 @@ function Grid() {
             dataLength={listOfHome.length}
             next={() => nextLoad()}
             style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }} //To put endMessage and loader to the top.
-            hasMore={true}
+            hasMore={loadMore}
             loader={<h4>Loading...</h4>}
           >
             {listOfHome.map((home) => {

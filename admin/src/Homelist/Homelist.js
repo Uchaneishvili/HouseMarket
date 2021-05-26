@@ -136,8 +136,6 @@ function Homelist() {
 
   const handleTableChange = (pagination, sorter) => {
     loadData(pagination.current, "", sorter.field, sorter.direction);
-    console.log(sorter.field);
-    console.log(sorter.direction);
   };
 
   return (

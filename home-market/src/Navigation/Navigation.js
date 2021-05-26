@@ -8,7 +8,6 @@ function Navigation(props) {
   const [openPopup, setOpenPopup] = useState(false);
   const [detailSearch, setDetailSearch] = useState(false);
   const [search, setSearch] = useState("");
-  const [defaultValue, setDefaultValue] = useState(false);
 
   const modalFnct = () => {
     setOpenPopup(true);
@@ -21,8 +20,6 @@ function Navigation(props) {
   const searchOnclick = (e) => {
     setDetailSearch(true);
   };
-
-  console.log(search);
 
   const onSearch = () => {
     props.loadData(1, search);
@@ -51,12 +48,14 @@ function Navigation(props) {
             id="search-input"
             value={search}
             onClick={() => searchOnclick()}
-            onChange={(event) =>
-              defaultValue ? setSearch("") : setSearch(event.target.value)
-            }
+            onChange={(event) => setSearch(event.target.value)}
           />
           <div className="search-icon-container" onClick={() => onSearch()}>
-            <img src="./icons/search-icon.svg" className="search-main-icon" />
+            <img
+              src="./icons/search-icon.svg"
+              className="search-main-icon"
+              alt="search icon"
+            />
           </div>
         </div>
         <button
