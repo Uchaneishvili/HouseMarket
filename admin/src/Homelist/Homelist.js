@@ -14,7 +14,7 @@ function Homelist() {
   const [searchVal, setSearchVal] = useState();
 
   useEffect(() => {
-    loadData();
+    loadData(1);
   }, []);
 
   const deleteAdvertisement = async (id) => {
@@ -50,6 +50,7 @@ function Homelist() {
       setHomeData(response.data.data);
       setTotal(response.data.count);
       setCurrent(response.data.page);
+      console.log(response.data.page);
     });
   };
 
@@ -134,8 +135,9 @@ function Homelist() {
   ];
 
   const handleTableChange = (pagination, sorter) => {
-    loadData(pagination, "", sorter.field, sorter.direction);
-    console.log("test");
+    loadData(pagination.current, "", sorter.field, sorter.direction);
+    console.log(sorter.field);
+    console.log(sorter.direction);
   };
 
   return (
