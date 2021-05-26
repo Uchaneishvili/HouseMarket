@@ -47,6 +47,7 @@
 }
 .uploaded-image {
   margin-top: 5px;
+  max-width: 100%;
 }
 .add-type-home {
   display: flex;
