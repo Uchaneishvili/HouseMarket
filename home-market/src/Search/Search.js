@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Search.css";
 
 function Search() {
+  const [minRange, setMinRange] = useState(0);
+  const [maxRange, setMaxRange] = useState(5);
+
+  const chooseMinPrice = (e) => {
+    setMinRange(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const chooseMaxPrice = (e) => {
+    setMaxRange(e.target.value);
+  };
   return (
     <div className="container">
       <div className="search-container">
@@ -15,9 +26,16 @@ function Search() {
               max="5"
               step="0.5"
               id="customRange3"
+              onChange={chooseMinPrice}
             />
 
-            <input type="number" className="price-range-input" />
+            <input
+              type="number"
+              className="price-range-input"
+              defaultValue={0}
+              value={minRange}
+              onChange={chooseMinPrice}
+            />
           </div>
 
           <label>To :</label>
@@ -28,10 +46,15 @@ function Search() {
               min="0"
               max="5"
               step="0.5"
-              id="custom
-        Range3"
+              id="customRange3"
+              onChange={chooseMaxPrice}
             />
-            <input type="number" className="price-range-input" />
+            <input
+              type="number"
+              className="price-range-input"
+              onChange={chooseMaxPrice}
+              value={maxRange}
+            />
           </div>
         </div>
         <div className="category-container">

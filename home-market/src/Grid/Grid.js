@@ -12,7 +12,13 @@ function Grid() {
 
   useEffect(() => {
     loadData(1);
-  });
+  }, []);
+
+  useEffect(() => {
+    console.log(currentPage);
+    console.log(totalPages);
+    console.log(loadMore);
+  }, [currentPage]);
 
   const nextLoad = () => {
     setTimeout(() => {
