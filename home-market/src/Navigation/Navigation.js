@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import "./Navigation.css";
 import CreateNew from "../Add/Create.js";
 import Search from "../Search/Search";
-import { BrowserRouter as Router, Link } from "react-router-dom";
 
 function Navigation(props) {
   const [openPopup, setOpenPopup] = useState(false);
   const [detailSearch, setDetailSearch] = useState(false);
   const [search, setSearch] = useState("");
-  let isBool = false;
 
   const modalFnct = () => {
     setOpenPopup(true);

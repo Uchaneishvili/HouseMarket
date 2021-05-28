@@ -12,6 +12,7 @@ function Homelist() {
   const [current, setCurrent] = useState(1);
   const [total, setTotal] = useState();
   const [searchVal, setSearchVal] = useState();
+  const [sortType, setSortType] = useState("default");
 
   useEffect(() => {
     loadData(1);
@@ -87,7 +88,18 @@ function Homelist() {
       title: "Room",
       dataIndex: "room",
       width: "150px",
-      sorter: true,
+      sorter: (a, b, sortDirection) => {
+        if (a.room != null && b.room != null) {
+          a.room.localeCompare(b.room);
+        }
+        if (a.room) {
+          return sortDirection === "ascend" ? 1 : -1;
+        }
+        if (b.room) {
+          return sortDirection === "ascend" ? -1 : 1;
+        }
+        return 0;
+      },
     },
     {
       title: "Area",
@@ -105,7 +117,7 @@ function Homelist() {
       dataIndex: "category",
       width: "150px",
       filters: [
-        { text: "For Sale", value: "for   sale" },
+        { text: "For Sale", value: "for sale" },
         { text: "For Rent", value: "for rent" },
         { text: "For Daily Rent", value: "for daily rent" },
       ],
@@ -134,8 +146,8 @@ function Homelist() {
     },
   ];
 
-  const handleTableChange = (pagination, sorter) => {
-    loadData(pagination.current, "", sorter.field, sorter.direction);
+  const handleTableChange = (pagination, filters, sorter) => {
+    loadData(pagination.current, "", sorter.field, sorter.order, filters);
   };
 
   return (

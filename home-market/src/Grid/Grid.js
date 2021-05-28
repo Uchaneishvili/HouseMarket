@@ -31,6 +31,7 @@ function Grid() {
     if (search) {
       url += `&search=${search}`;
     }
+
     await axios.get(url).then((response) => {
       setListOfHome(response.data.data);
       setTotalPages(response.data.pages);

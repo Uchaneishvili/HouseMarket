@@ -51,39 +51,19 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.get("/homelist", async (req, res) => {
   //Read
   try {
-    const { search, sortDirection, sortField, floor, room, area } = req.query;
+    const { search, sortDirection, sortField, category } = req.query;
     const q = {};
     q["$or"];
 
-    if (floor) {
-      floor.split(",").forEach((value) => {
-        if (!q["$or"]) {
-          q["$or"] = [{ floor: value }];
-        } else {
-          q["$or"].push({ floor: value });
-        }
-      });
-    }
-
-    if (room) {
-      room.split(",").forEach((value) => {
-        if (!q["$or"]) {
-          q["$or"] = [{ room: value }];
-        } else {
-          q["$or"].push({ room: value });
-        }
-      });
-    }
-
-    if (area) {
-      area.split(",").forEach((value) => {
-        if (!q["$or"]) {
-          q["$or"] = [{ area: value }];
-        } else {
-          q["$or"].push({ area: value });
-        }
-      });
-    }
+    // if (category) {
+    //   category.split(",").forEach((value) => {
+    //     if (!q["$or"]) {
+    //       q["$or"] = [{ category: value }];
+    //     } else {
+    //       q["$or"].push({ category: value });
+    //     }
+    //   });
+    // }
 
     if (search) {
       if (!q["$or"]) {
@@ -100,6 +80,7 @@ app.get("/homelist", async (req, res) => {
       sortInHome[sortField] = sortDirection === "ascend" ? 1 : -1;
     }
 
+    console.log(sortInHome);
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 12;
     const skip = (page - 1) * pageSize;
