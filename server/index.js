@@ -51,7 +51,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.get("/homelist", async (req, res) => {
   //Read
   try {
-    const { search, sortDirection, sortField, category } = req.query;
+    const { search, sortDirection, sortField, category, minPrice, maxPrice } =
+      req.query;
     let q = {};
     q["$or"];
 
@@ -67,6 +68,14 @@ app.get("/homelist", async (req, res) => {
           q["$or"].push({ category: value });
         }
       });
+    }
+
+    if (minPrice) {
+      console.log(minPrice);
+    }
+
+    if (maxPrice) {
+      console.log(maxPrice);
     }
 
     if (search) {
