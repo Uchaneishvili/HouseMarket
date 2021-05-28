@@ -52,13 +52,17 @@ app.get("/homelist", async (req, res) => {
   //Read
   try {
     const { search, sortDirection, sortField, category } = req.query;
-    const q = {};
+    let q = {};
     q["$or"];
 
     if (category) {
       category.split(",").forEach((value) => {
         if (!q["$or"]) {
-          q["$or"] = [{ category: value }];
+          if (value != "undefined") {
+            q["$or"] = [{ category: value }];
+          } else {
+            q = {};
+          }
         } else {
           q["$or"].push({ category: value });
         }
@@ -80,7 +84,6 @@ app.get("/homelist", async (req, res) => {
       sortInHome[sortField] = sortDirection === "ascend" ? 1 : -1;
     }
 
-    console.log(sortInHome);
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 12;
     const skip = (page - 1) * pageSize;
