@@ -55,15 +55,15 @@ app.get("/homelist", async (req, res) => {
     const q = {};
     q["$or"];
 
-    // if (category) {
-    //   category.split(",").forEach((value) => {
-    //     if (!q["$or"]) {
-    //       q["$or"] = [{ category: value }];
-    //     } else {
-    //       q["$or"].push({ category: value });
-    //     }
-    //   });
-    // }
+    if (category) {
+      category.split(",").forEach((value) => {
+        if (!q["$or"]) {
+          q["$or"] = [{ category: value }];
+        } else {
+          q["$or"].push({ category: value });
+        }
+      });
+    }
 
     if (search) {
       if (!q["$or"]) {

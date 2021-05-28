@@ -88,18 +88,7 @@ function Homelist() {
       title: "Room",
       dataIndex: "room",
       width: "150px",
-      sorter: (a, b, sortDirection) => {
-        if (a.room != null && b.room != null) {
-          a.room.localeCompare(b.room);
-        }
-        if (a.room) {
-          return sortDirection === "ascend" ? 1 : -1;
-        }
-        if (b.room) {
-          return sortDirection === "ascend" ? -1 : 1;
-        }
-        return 0;
-      },
+      sorter: true,
     },
     {
       title: "Area",
@@ -117,9 +106,9 @@ function Homelist() {
       dataIndex: "category",
       width: "150px",
       filters: [
-        { text: "For Sale", value: "for sale" },
-        { text: "For Rent", value: "for rent" },
-        { text: "For Daily Rent", value: "for daily rent" },
+        { text: "For Sale", value: "For Sale" },
+        { text: "For Rent", value: "For Rent" },
+        { text: "For Daily Rent", value: "For Daily Rent" },
       ],
     },
     {
