@@ -64,7 +64,7 @@ function Navigation(props) {
         </button>
       </div>
       <CreateNew openPopup={openPopup} exitModalFnct={exitModalFnct} />
-      {detailSearch ? <Search /> : ""}
+      {/* {detailSearch ? <Search /> : ""} */}
     </div>
   );
 }

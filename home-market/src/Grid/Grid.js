@@ -3,6 +3,7 @@ import "./Grid.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "axios";
 import Navigation from "../Navigation/Navigation";
+import Search from "../Search/Search";
 
 function Grid() {
   const [listOfHome, setListOfHome] = useState([]);
@@ -26,10 +27,22 @@ function Grid() {
     }, 1500);
   };
 
-  const loadData = async (page, search) => {
+  const loadData = async (page, search, category, minPrice, maxPrice) => {
     let url = `http://localhost:3001/homelist?page=${page}`;
     if (search) {
       url += `&search=${search}`;
+    }
+
+    if (category) {
+      url += `&category=${category}`;
+    }
+
+    if (minPrice) {
+      url += `&minPrice=${minPrice}`;
+    }
+
+    if (maxPrice) {
+      url += `&maxPrice=${maxPrice}`;
     }
 
     await axios.get(url).then((response) => {
@@ -47,6 +60,7 @@ function Grid() {
   return (
     <div>
       <Navigation loadData={loadData} />
+      <Search loadData={loadData} />
       <div className="container grid-container">
         <pre>{JSON.stringify(listOfHome)}</pre>
         <div className="cards-container">
