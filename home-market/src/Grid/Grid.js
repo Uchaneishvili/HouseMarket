@@ -76,7 +76,7 @@ function Grid() {
                         <p className="card-room"> ოთ. {home.room}</p>
                       </div>
 
-                      <p className="card-area"> ფართობი: {home.area} მ²</p>
+                      <p className="card-area"> ფართ: {home.area} მ²</p>
                     </div>
                     <p className="card-text desc">{home.desc}</p>
                     <p className="card-text price">{home.price} $</p>

@@ -4,6 +4,8 @@ import "./Search.css";
 function Search() {
   const [minRange, setMinRange] = useState(0);
   const [maxRange, setMaxRange] = useState(5);
+  const [categoryName, setCategoryName] = useState();
+  const [isSelectedCategory, setIsSelectedCategory] = useState("");
 
   const chooseMinPrice = (e) => {
     setMinRange(e.target.value);
@@ -13,6 +15,12 @@ function Search() {
   const chooseMaxPrice = (e) => {
     setMaxRange(e.target.value);
   };
+
+  const handleCategory = (title) => {
+    // setCategoryName(title);
+    setIsSelectedCategory(title);
+  };
+
   return (
     <div className="container">
       <div className="search-container">
@@ -60,16 +68,40 @@ function Search() {
         <div className="category-container">
           <label>Category :</label>
           <div className="category-buttons-container">
-            <button className="btn btn-outline-success category-buttons for-sale">
+            <button
+              className={
+                isSelectedCategory === "For Sale"
+                  ? "btn btn-outline-success category-buttons for-sale is-selected"
+                  : "btn btn-outline-success category-buttons for-sale"
+              }
+              onClick={() => handleCategory("For Sale")}
+            >
               For Sale
             </button>
-            <button className="btn btn-outline-success category-buttons for-rent">
+            <button
+              className={
+                isSelectedCategory === "For Rent"
+                  ? "btn btn-outline-success category-buttons for-sale is-selected"
+                  : "btn btn-outline-success category-buttons for-sale"
+              }
+              onClick={() => handleCategory("For Rent")}
+            >
               For Rent
             </button>
-            <button className="btn btn-outline-success category-buttons for-daily-rent">
+            <button
+              className={
+                isSelectedCategory === "For Daily Rent"
+                  ? "btn btn-outline-success category-buttons for-sale is-selected"
+                  : "btn btn-outline-success category-buttons for-sale"
+              }
+              onClick={() => handleCategory("For Daily Rent")}
+            >
               For Daily Rent
             </button>
           </div>
+        </div>
+        <div>
+          <button>search</button>
         </div>
       </div>
     </div>

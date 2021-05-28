@@ -8,6 +8,7 @@ function Navigation(props) {
   const [openPopup, setOpenPopup] = useState(false);
   const [detailSearch, setDetailSearch] = useState(false);
   const [search, setSearch] = useState("");
+  let isBool = false;
 
   const modalFnct = () => {
     setOpenPopup(true);
@@ -29,17 +30,14 @@ function Navigation(props) {
   const onMainTitle = () => {
     props.loadData(1, "");
     setSearch("");
+    window.scrollTo(0, 0);
   };
   return (
     <div className="header">
       <div className="container header-navigation">
-        <Router>
-          <Link to="/">
-            <h4 className="app-name" onClick={() => onMainTitle()}>
-              APP NAME
-            </h4>
-          </Link>
-        </Router>
+        <h4 className="app-name" onClick={() => onMainTitle()}>
+          APP NAME
+        </h4>
         <div className="search">
           <input
             className="search-input"
