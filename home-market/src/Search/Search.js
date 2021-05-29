@@ -41,12 +41,12 @@ function Search(props) {
                 step="5"
                 id="customRange3"
                 onChange={chooseMinPrice}
+                defaultValue={0}
               />
 
               <input
                 type="number"
                 className="price-range-input"
-                defaultValue={0}
                 value={minRange}
                 onChange={chooseMinPrice}
               />
@@ -62,6 +62,7 @@ function Search(props) {
                 step="5"
                 id="customRange3"
                 onChange={chooseMaxPrice}
+                defaultValue={100}
               />
               <input
                 type="number"

@@ -21,6 +21,12 @@ function Grid() {
       loadData(currentPage + 1);
     }, 1500);
   };
+  const clearAndLoadData = (page, search, category, minPrice, maxPrice) => {
+    setListOfHome([]);
+    setTimeout(() => {
+      loadData(page, search, category, minPrice, maxPrice);
+    }, 1500);
+  };
 
   const loadData = async (page, search, category, minPrice, maxPrice) => {
     let url = `http://localhost:3001/homelist?page=${page}`;
@@ -41,10 +47,15 @@ function Grid() {
     }
 
     await axios.get(url).then((response) => {
-      setListOfHome(response.data.data);
+      const newData = [...listOfHome, ...response.data.data];
+      debugger;
+      setListOfHome(newData);
       setTotalPages(response.data.pages);
       setCurrentPage(response.data.page);
-      if (totalPages > currentPage) {
+      const totalPagesData = response.data.pages;
+      const currentPageData = response.data.page;
+      console.log(totalPages);
+      if (totalPagesData > currentPageData) {
         setLoadMore(true);
       } else {
         setLoadMore(false);
@@ -55,7 +66,10 @@ function Grid() {
   return (
     <div>
       <Navigation loadData={loadData} detailSearchIsOpen={detailSearchIsOpen} />
-      <Search loadData={loadData} detailSearchIsOpen={detailSearchIsOpen} />
+      <Search
+        loadData={clearAndLoadData}
+        detailSearchIsOpen={detailSearchIsOpen}
+      />
       <div className="container grid-container">
         <div className="cards-container">
           <InfiniteScroll
