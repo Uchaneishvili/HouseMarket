@@ -55,6 +55,8 @@ function Create(props) {
       desc: desc,
       price: price,
     });
+    props.loadData(1);
+
     props.exitModalFnct();
     const imgName = e.target.name.value;
     if (!imgName) {
@@ -65,7 +67,6 @@ function Create(props) {
       name: imgName,
       image: fileUrl,
     });
-    props.loadData(1);
   };
 
   useEffect(() => {

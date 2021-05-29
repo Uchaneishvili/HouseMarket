@@ -162,7 +162,6 @@ function Homelist() {
           Home List
         </Header>
         <div>
-          <pre>{JSON.stringify(homeData)}</pre>
           <div className="search">
             <Search
               style={{ width: 350 }}

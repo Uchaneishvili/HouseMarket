@@ -10,6 +10,7 @@ function Grid() {
   const [totalPages, setTotalPages] = useState();
   const [loadMore, setLoadMore] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [detailSearchIsOpen, setDetailSearchIsOpen] = useState(false);
 
   useEffect(() => {
     loadData(1);
@@ -59,16 +60,15 @@ function Grid() {
 
   return (
     <div>
-      <Navigation loadData={loadData} />
-      <Search loadData={loadData} />
+      <Navigation loadData={loadData} detailSearchIsOpen={detailSearchIsOpen} />
+      <Search loadData={loadData} detailSearchIsOpen={detailSearchIsOpen} />
       <div className="container grid-container">
-        <pre>{JSON.stringify(listOfHome)}</pre>
         <div className="cards-container">
           <InfiniteScroll
             pageStart={0}
             dataLength={listOfHome.length}
             next={() => nextLoad()}
-            style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }} //To put endMessage and loader to the top.
+            style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
             hasMore={loadMore}
             loader={<h4>Loading...</h4>}
           >
