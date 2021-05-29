@@ -16,12 +16,6 @@ function Grid() {
     loadData(1);
   }, []);
 
-  useEffect(() => {
-    console.log(currentPage);
-    console.log(totalPages);
-    console.log(loadMore);
-  }, [currentPage]);
-
   const nextLoad = () => {
     setTimeout(() => {
       loadData(currentPage + 1);

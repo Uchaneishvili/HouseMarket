@@ -51,7 +51,6 @@ function Homelist() {
       setHomeData(response.data.data);
       setTotal(response.data.count);
       setCurrent(response.data.page);
-      console.log(response.data.page);
     });
   };
 
