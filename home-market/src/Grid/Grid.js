@@ -21,11 +21,50 @@ function Grid() {
       loadData(currentPage + 1);
     }, 1500);
   };
-  const clearAndLoadData = (page, search, category, minPrice, maxPrice) => {
+  const clearAndLoadData = async (
+    page,
+    search,
+    category,
+    minPrice,
+    maxPrice
+  ) => {
     setListOfHome([]);
-    setTimeout(() => {
-      loadData(page, search, category, minPrice, maxPrice);
-    }, 1500);
+
+    let url = `http://localhost:3001/homelist?page=${page}`;
+    if (search) {
+      url += `&search=${search}`;
+    }
+
+    if (category) {
+      url += `&category=${category}`;
+    }
+
+    if (minPrice) {
+      url += `&minPrice=${minPrice}`;
+    }
+
+    if (maxPrice) {
+      url += `&maxPrice=${maxPrice}`;
+    }
+
+    await axios.get(url).then((response) => {
+      const newData = [...response.data.data];
+      debugger;
+      setListOfHome(newData);
+      setTotalPages(response.data.pages);
+      setCurrentPage(response.data.page);
+      const totalPagesData = response.data.pages;
+      const currentPageData = response.data.page;
+      console.log(totalPages);
+      if (totalPagesData > currentPageData) {
+        setLoadMore(true);
+      } else {
+        setLoadMore(false);
+      }
+    });
+    // setTimeout(() => {
+    //   loadData(page, search, category, minPrice, maxPrice);
+    // }, 1500);
   };
 
   const loadData = async (page, search, category, minPrice, maxPrice) => {
