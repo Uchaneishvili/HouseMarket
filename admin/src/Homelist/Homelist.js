@@ -12,7 +12,6 @@ function Homelist() {
   const [current, setCurrent] = useState(1);
   const [total, setTotal] = useState();
   const [searchVal, setSearchVal] = useState();
-  const [sortType, setSortType] = useState("default");
 
   useEffect(() => {
     loadData(1);

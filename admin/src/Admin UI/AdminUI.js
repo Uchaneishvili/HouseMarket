@@ -2,19 +2,10 @@ import React from "react";
 import "./AdminUI.css";
 import Homelist from "../Homelist/Homelist";
 import { Layout, Menu } from "antd";
-import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  ShopOutlined,
-  TeamOutlined,
-  UserOutlined,
-  UploadOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 
 function AdminUI() {
-  const { Header, Content, Footer, Sider } = Layout;
+  const { Content, Footer, Sider } = Layout;
   return (
     <div>
       <Layout>
