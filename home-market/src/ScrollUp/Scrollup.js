@@ -9,7 +9,7 @@ function Scrollup() {
     <div className="scroll-up-container" onClick={() => scrollToTheTop()}>
       <div className="scroll-up-image-container">
         <img
-          src="./icons/scroll-up-arrow.svg"
+          src="https://firebasestorage.googleapis.com/v0/b/home-market-98990.appspot.com/o/scroll-up-arrow.svg?alt=media&token=a12172b0-ef4b-43cf-b6d1-bda864d4da45"
           className="scroll-up-image"
           alt="Scroll Up"
         />

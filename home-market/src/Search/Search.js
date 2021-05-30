@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios";
 import "./Search.css";
 
 function Search(props) {
   const [minRange, setMinRange] = useState(0);
-  const [maxRange, setMaxRange] = useState(5);
+  const [maxRange, setMaxRange] = useState(100);
   const [isSelectedCategory, setIsSelectedCategory] = useState("");
   const [filterCategory, setFilterCategory] = useState();
 

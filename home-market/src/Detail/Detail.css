@@ -1,0 +1,125 @@
+.detail-picture {
+  height: 70%;
+  width: 70%;
+}
+
+.img-container {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(33 34 35);
+}
+
+.price-card {
+  padding: 20px 16px 24px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 15px 0 rgb(178 186 209 / 30%);
+  margin-bottom: 20px;
+  width: 435px;
+}
+.description-container {
+  width: 60%;
+}
+
+.info-parameters {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 15px 0 rgb(178 186 209 / 30%);
+  padding: 30px;
+  margin: 22px 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+  width: 40%;
+}
+
+.home-info {
+  padding: 10%;
+}
+
+.detail-info-container {
+  margin-left: 8%;
+  margin-right: 8%;
+  margin-top: 1%;
+}
+
+.name-and-address {
+  margin-bottom: 3px;
+  width: 60%;
+}
+.info-card-area-number {
+  font-weight: 700;
+}
+.floor-title {
+  display: block;
+  font-size: 14px;
+}
+
+.floor-number-and-title,
+.room-number-and-title,
+.area-number-and-title {
+  display: grid;
+}
+
+.parameters-area,
+.parameters-floor,
+.parameters-rooms {
+  display: flex;
+}
+
+.detail-description-title {
+  margin-top: 2%;
+}
+
+.detail-description {
+  font-size: 14px;
+}
+.short-parameters-container {
+  display: flex;
+  align-content: flex-start;
+  justify-content: flex-end;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+
+span:first-child {
+  font-size: 19px;
+  line-height: 20px;
+  color: #26262a;
+}
+
+span:last-child {
+  font-size: 14px;
+  color: #6c6c75;
+  line-height: 0px;
+}
+.area-image,
+.floor-image,
+.rooms-image {
+  width: 33px;
+  height: 33px;
+  margin-right: 5px;
+}
+
+.info-price {
+  color: #007a3e;
+  font-weight: 600;
+  margin: 0%;
+}
+
+.name-and-price {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-address {
+  font-style: italic;
+}

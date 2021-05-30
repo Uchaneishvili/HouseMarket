@@ -223,8 +223,17 @@ app.delete("/delete/:id", async (req, res) => {
  *        description: A successfull response
  *
  */
-app.put("/edit:id", (req, res) => {
-  res.send("updated record");
+
+app.get("/homelist/:id", async (req, res) => {
+  const id = req.params.id;
+
+  homeModel.findById(id, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+
+    res.send(result);
+  });
 });
 
 app.listen(3001, () => {

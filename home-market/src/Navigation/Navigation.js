@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Navigation.css";
 import CreateNew from "../Add/Create.js";
 import Search from "../Search/Search";
+import { Link } from "react-router-dom";
 
 function Navigation(props) {
   const [openPopup, setOpenPopup] = useState(false);
@@ -26,16 +27,22 @@ function Navigation(props) {
   };
 
   const onMainTitle = () => {
-    props.loadData(1, "");
-    setSearch("");
-    window.scrollTo(0, 0);
+    if (!window.location.pathname.includes("homelist")) {
+      setTimeout(() => {
+        props.loadData(1);
+      }, 1500);
+    }
+
+    window.scroll(0, 0);
   };
   return (
     <div className="header">
       <div className="container header-navigation">
-        <h4 className="app-name" onClick={() => onMainTitle()}>
-          APP NAME
-        </h4>
+        <Link to="/">
+          <h4 className="app-name" onClick={() => onMainTitle()}>
+            APP NAME
+          </h4>
+        </Link>
         <div className="search">
           <input
             className="search-input"
@@ -48,7 +55,7 @@ function Navigation(props) {
           />
           <div className="search-icon-container" onClick={() => onSearch()}>
             <img
-              src="./icons/search-icon.svg"
+              src="https://firebasestorage.googleapis.com/v0/b/home-market-98990.appspot.com/o/search-icon.svg?alt=media&token=d55be6c1-3e62-4cc7-8f7d-53230907a9b9"
               className="search-main-icon"
               alt="search icon"
             />
@@ -59,7 +66,11 @@ function Navigation(props) {
           className="btn btn-outline-success add-advertisement"
           onClick={modalFnct}
         >
-          <img src="./icons/fi_plus.svg" alt="add" className="add-icon" />
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/home-market-98990.appspot.com/o/fi_plus.svg?alt=media&token=2426bd5f-2c6e-46e1-8d72-5cac1dd6ff75"
+            alt="add"
+            className="add-icon"
+          />
           Add
         </button>
       </div>
