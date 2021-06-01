@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./Grid.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "axios";
@@ -6,16 +6,20 @@ import Navigation from "../Navigation/Navigation";
 import Detail from "../Detail/Detail";
 import Search from "../Search/Search";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import loadContext, { loadDataContext } from "../loadContext";
 
-function Grid() {
+function Grid(props) {
   const [listOfHome, setListOfHome] = useState([]);
   const [totalPages, setTotalPages] = useState();
   const [loadMore, setLoadMore] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [detailSearchIsOpen, setDetailSearchIsOpen] = useState(false);
 
+  const contextValue = useContext(loadDataContext);
+
   useEffect(() => {
     loadData(1);
+    console.log(contextValue);
   }, []);
 
   const nextLoad = () => {
@@ -125,8 +129,8 @@ function Grid() {
           >
             {listOfHome.map((home) => {
               return (
-                <Link to={`/homelist/${home._id}`}>
-                  <div className="card house-card" key={home._id}>
+                <Link to={`/homelist/${home._id}`} key={home._id}>
+                  <div className="card house-card">
                     <img
                       width="300px"
                       height="170px"

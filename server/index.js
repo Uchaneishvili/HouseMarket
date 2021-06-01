@@ -42,7 +42,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  * @swagger
  * /homelist:
  *  get:
- *    description: Use to request all advertisements
+ *    summary: Get all advertisements.
  *    responses:
  *      '200':
  *        description: A successfull response
@@ -123,43 +123,50 @@ app.get("/homelist", async (req, res) => {
 });
 
 /**
- * @swagger
- *  definitions:
- *    Home:
- *        type: object
- *        required:
- *        - image
- *        - name
- *        - room
- *        properties:
- *          image:
- *            type: string
- *          name:
- *            type: string
- *            example: "for sale"
- *          room:
- *            type: integer
- *            format: int64
- *            example: 4
+ *  @swagger
+ *
+ * paths:
+ *   /addhome:
+ *     post:
+ *       summary: Creates a new advertisement.
+ *       consumes:
+ *         - application/json
+ *       parameters:
+ *         - in: body
+ *           name: Advertisement
+ *           description: Creates a new  advertisement.
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               image:
+ *                 type: string
+ *               room:
+ *                 type: integer
+ *                 format: int32
+ *               floor:
+ *                 type: integer
+ *                 format: int32
+ *               area:
+ *                 type: number
+ *                 format: double
+ *               address:
+ *                 type: string
+ *               desc:
+ *                 type: string
+ *               price:
+ *                 type: integer
+ *                 format: int32
+ *               typeCard:
+ *                 type: string
+ *               category:
+ *                 type: string
+ *       responses:
+ *         200:
+ *           description: Created
  */
 
-/**
- * @swagger
- * /addhome:
- *  post:
- *    description: Use to request all advertisements
- *    parameters:
- *      type: object
- *      required:
- *      - image
- *      - room
- *      - name
- *
- *    responses:
- *      '200':
- *        description: A successfull response
- *
- */
 app.post("/addhome", async (req, res) => {
   const {
     image,
@@ -196,16 +203,6 @@ app.post("/addhome", async (req, res) => {
   }
 });
 
-/**
- * @swagger
- * /delete:id:
- *  delete:
- *    description: Delete Record
- *    responses:
- *      '200':
- *        description: A successfull response
- *
- */
 app.delete("/delete/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -214,14 +211,24 @@ app.delete("/delete/:id", async (req, res) => {
 });
 
 /**
- * @swagger
- * /edit:id:
- *  put:
- *    description: Update Record
- *    responses:
- *      '200':
- *        description: A successfull response
+ *  @swagger
  *
+ * paths:
+ *   /homelist/{id}:
+ *     get:
+ *       summary: Get specific advertisement info.
+ *       consumes:
+ *         - application/json
+ *       parameters:
+ *         - in: path
+ *           name: id
+ *           schema:
+ *           type: string
+ *           required: true
+ *           description: id of advertisement
+ *       responses:
+ *         201:
+ *           description: OK
  */
 
 app.get("/homelist/:id", async (req, res) => {
