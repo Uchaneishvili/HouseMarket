@@ -28,6 +28,11 @@
   margin-right: 70px;
 }
 
+.desc {
+  height: 100px !important;
+  border-radius: 10px !important;
+}
+
 .category-buttons-add-container {
   display: flex;
   flex-wrap: nowrap;

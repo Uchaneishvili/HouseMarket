@@ -274,11 +274,13 @@ function Create(props) {
                         id="formFile"
                         onChange={onChange}
                       />
-                      <img
-                        className="uploaded-image"
-                        alt="uploaded"
-                        src={fileUrl}
-                      />
+                      {fileUrl && (
+                        <img
+                          className="uploaded-image"
+                          alt="uploaded"
+                          src={fileUrl}
+                        />
+                      )}
                     </div>
                   </form>
                 )}

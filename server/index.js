@@ -51,8 +51,15 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.get("/homelist", async (req, res) => {
   //Read
   try {
-    const { search, sortDirection, sortField, category, minPrice, maxPrice } =
-      req.query;
+    const {
+      search,
+      sortDirection,
+      sortField,
+      category,
+      minPrice,
+      maxPrice,
+      price,
+    } = req.query;
     let q = {};
     q["$or"];
 
@@ -71,7 +78,6 @@ app.get("/homelist", async (req, res) => {
     }
 
     if (minPrice) {
-      console.log(minPrice);
     }
 
     if (maxPrice) {
@@ -202,6 +208,27 @@ app.post("/addhome", async (req, res) => {
     res.send(error);
   }
 });
+
+/**
+ *  @swagger
+ *
+ * paths:
+ *   /delete/{id}:
+ *     delete:
+ *       summary: Delete an advertisement.
+ *       consumes:
+ *         - application/json
+ *       parameters:
+ *         - in: path
+ *           name: id
+ *           schema:
+ *           type: string
+ *           required: true
+ *           description: id of advertisement
+ *       responses:
+ *         201:
+ *           description: OK
+ */
 
 app.delete("/delete/:id", async (req, res) => {
   const id = req.params.id;

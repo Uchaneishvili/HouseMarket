@@ -91,12 +91,14 @@ function Grid(props) {
     }
 
     await axios.get(url).then((response) => {
+      console.log(response.data.data);
       const newData = [...listOfHome, ...response.data.data];
       setListOfHome(newData);
       setTotalPages(response.data.pages);
       setCurrentPage(response.data.page);
       const totalPagesData = response.data.pages;
       const currentPageData = response.data.page;
+
       console.log(totalPages);
       if (totalPagesData > currentPageData) {
         setLoadMore(true);
