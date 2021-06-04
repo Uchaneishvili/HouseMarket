@@ -93,3 +93,8 @@
   font-weight: 600;
   margin: 0%;
 }
+
+.house-card {
+  text-decoration: none;
+  color: #007a3e;
+}
