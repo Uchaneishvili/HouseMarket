@@ -2,7 +2,7 @@ import React, { createContext } from "react";
 
 export const loadDataContext = createContext();
 
-function loadContext(props) {
+function LoadContextProvider(props) {
   return (
     <div>
       <loadDataContext.Provider value={"hello world"}>
@@ -12,4 +12,4 @@ function loadContext(props) {
   );
 }
 
-export default loadContext;
+export default LoadContextProvider;

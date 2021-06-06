@@ -78,10 +78,15 @@ app.get("/homelist", async (req, res) => {
     }
 
     if (minPrice) {
+      q["price"] = { $gte: +minPrice };
     }
 
     if (maxPrice) {
-      console.log(maxPrice);
+      if (q["price"]) {
+        q["price"]["$lte"] = +maxPrice;
+      } else {
+        q["price"] = { $lte: +maxPrice };
+      }
     }
 
     if (search) {
@@ -92,6 +97,8 @@ app.get("/homelist", async (req, res) => {
         q["$or"].push({ name: search });
       }
     }
+
+    console.log(q);
 
     const sortInHome = {};
 

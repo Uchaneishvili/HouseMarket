@@ -4,11 +4,11 @@ import Footer from "./Footer/Footer";
 import Scrollup from "./ScrollUp/Scrollup";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Detail from "./Detail/Detail";
-import { loadContext } from "./loadContext";
+import LoadContextProvider from "./loadContext";
 
 function App() {
   return (
-    <loadContext>
+    <LoadContextProvider>
       <div>
         <Router>
           <Route path="/" exact component={Grid} />
@@ -18,7 +18,7 @@ function App() {
           <Route path="/" component={Footer} />
         </Router>
       </div>
-    </loadContext>
+    </LoadContextProvider>
   );
 }
 
