@@ -3,10 +3,9 @@ import "./Grid.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "axios";
 import Navigation from "../Navigation/Navigation";
-import Detail from "../Detail/Detail";
 import Search from "../Search/Search";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import loadContext, { loadDataContext } from "../loadContext";
+import { Link } from "react-router-dom";
+import { loadDataContext } from "../loadContext";
 import Sort from "../Sort/Sort";
 
 function Grid(props) {

@@ -27,7 +27,7 @@ function Detail() {
       <Navigation />
 
       <div className="img-container">
-        <img src={details.image} className="detail-picture" />
+        <img src={details.image} alt="detail" className="detail-picture" />
       </div>
       <div className="container">
         <div className="detail-info-container">
@@ -56,6 +56,7 @@ function Detail() {
               {details.area && (
                 <div className="parameters-area">
                   <img
+                    alt="area"
                     className="area-image"
                     src="https://firebasestorage.googleapis.com/v0/b/home-market-98990.appspot.com/o/Area.svg?alt=media&token=8dff854e-e581-493b-a01c-a3bd606a7774"
                   />
@@ -68,6 +69,7 @@ function Detail() {
               {details.room && (
                 <div className="parameters-rooms">
                   <img
+                    alt="rooms"
                     className="rooms-image"
                     src="https://firebasestorage.googleapis.com/v0/b/home-market-98990.appspot.com/o/room.svg?alt=media&token=f2afc36b-c98e-47ff-9a4d-cc2dcc071d3a"
                   />
@@ -80,6 +82,7 @@ function Detail() {
               {details.floor && (
                 <div className="parameters-floor">
                   <img
+                    alt="floor"
                     className="floor-image"
                     src="https://firebasestorage.googleapis.com/v0/b/home-market-98990.appspot.com/o/Floor.svg?alt=media&token=c504c86d-1b03-42c5-a23f"
                   />

@@ -11,8 +11,8 @@ function Sort() {
 
   return (
     <div className="container">
-      <div className="sort-dropdown-container" onClick={rotateIcon}>
-        <div className="sort-dropdown">
+      <div className="sort-dropdown-container">
+        <div className="sort-dropdown" onClick={rotateIcon}>
           სორტირება
           <img
             className={sortState ? "sort-icon" : "sort-icon rotate"}
@@ -22,19 +22,19 @@ function Sort() {
         </div>
 
         {sortState && (
-          <ul class="dropdown-menu dropdown-list">
+          <ul className="dropdown-menu dropdown-list">
             <li>
-              <a class="dropdown-item" href="#">
+              <a className="dropdown-item" href="#">
                 სორტირება
               </a>
             </li>
             <li>
-              <a class="dropdown-item" href="#">
+              <a className="dropdown-item" href="#">
                 ფასის ზრდადობით
               </a>
             </li>
             <li>
-              <a class="dropdown-item" href="#">
+              <a className="dropdown-item" href="#">
                 ფასის კლებადობით
               </a>
             </li>

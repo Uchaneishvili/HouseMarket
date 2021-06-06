@@ -17,7 +17,6 @@ function Create(props) {
   const [address, setAddress] = useState("");
   const [price, setPrice] = useState();
   const [fileUrl, setFileUrl] = useState();
-  const [homes, setHomes] = useState([]);
   const [isSelected, setIsSelected] = useState();
   const [isSelectedCategory, setIsSelectedCategory] = useState();
   const [categoryName, setCategoryName] = useState();
@@ -67,20 +66,6 @@ function Create(props) {
       image: fileUrl,
     });
   };
-
-  useEffect(() => {
-    const fetchHomes = async () => {
-      const homesCollection = await db
-        .collection("home-market-98990-default-rtdb")
-        .get();
-      setHomes(
-        homesCollection.docs.map((doc) => {
-          return doc.data;
-        })
-      );
-    };
-    fetchHomes();
-  }, []);
 
   const handleCategory = (title) => {
     setCategoryName(title);
