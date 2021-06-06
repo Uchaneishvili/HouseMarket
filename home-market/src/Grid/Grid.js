@@ -7,6 +7,7 @@ import Detail from "../Detail/Detail";
 import Search from "../Search/Search";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import loadContext, { loadDataContext } from "../loadContext";
+import Sort from "../Sort/Sort";
 
 function Grid(props) {
   const [listOfHome, setListOfHome] = useState([]);
@@ -120,6 +121,8 @@ function Grid(props) {
         detailSearchIsOpen={detailSearchIsOpen}
       />
       <div className="container grid-container">
+        <Sort />
+
         <div className="cards-container">
           <InfiniteScroll
             pageStart={0}
