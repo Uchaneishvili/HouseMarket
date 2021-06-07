@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Sort.css";
 
 function Sort() {
-  const [sortState, setSortState] = useState(true);
+  const [sortState, setSortState] = useState(false);
 
   const rotateIcon = () => {
     setSortState(!sortState);

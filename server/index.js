@@ -98,8 +98,6 @@ app.get("/homelist", async (req, res) => {
       }
     }
 
-    console.log(q);
-
     const sortInHome = {};
 
     if (sortField && sortDirection != "undefined") {

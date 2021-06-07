@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./Navigation.css";
 import CreateNew from "../Add/Create.js";
+import { loadDataContext } from "../loadContext";
 import Search from "../Search/Search";
 import { Link } from "react-router-dom";
 
@@ -8,6 +9,7 @@ function Navigation(props) {
   const [openPopup, setOpenPopup] = useState(false);
   const [detailSearch, setDetailSearch] = useState(false);
   const [search, setSearch] = useState("");
+  const contextValue = useContext(loadDataContext);
 
   const modalFnct = () => {
     setOpenPopup(true);
@@ -22,19 +24,22 @@ function Navigation(props) {
   };
 
   const onSearch = () => {
-    props.loadData(1, search);
     setDetailSearch(false);
+    return contextValue;
   };
 
   const onMainTitle = () => {
     if (!window.location.pathname.includes("homelist")) {
       setTimeout(() => {
-        props.loadData(1);
+        return () => contextValue;
       }, 1500);
     }
 
     window.scroll(0, 0);
   };
+
+  console.log(contextValue);
+
   return (
     <div className="header">
       <div className="container header-navigation">
@@ -53,7 +58,7 @@ function Navigation(props) {
             onClick={() => searchOnclick()}
             onChange={(event) => setSearch(event.target.value)}
           />
-          <div className="search-icon-container" onClick={() => onSearch()}>
+          <div className="search-icon-container" onClick={onSearch}>
             <img
               src="https://firebasestorage.googleapis.com/v0/b/home-market-98990.appspot.com/o/search-icon.svg?alt=media&token=d55be6c1-3e62-4cc7-8f7d-53230907a9b9"
               className="search-main-icon"
@@ -75,7 +80,7 @@ function Navigation(props) {
         </button>
       </div>
       <CreateNew openPopup={openPopup} exitModalFnct={exitModalFnct} />
-      {/* {detailSearch ? <Search /> : ""} */}
+      {detailSearch ? <Search /> : ""}
     </div>
   );
 }

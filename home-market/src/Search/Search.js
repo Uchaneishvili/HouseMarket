@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { loadDataContext } from "../loadContext";
 import "./Search.css";
 
 function Search(props) {
@@ -6,6 +7,7 @@ function Search(props) {
   const [maxRange, setMaxRange] = useState(100);
   const [isSelectedCategory, setIsSelectedCategory] = useState("");
   const [filterCategory, setFilterCategory] = useState();
+  const contextValue = useContext(loadDataContext);
 
   const chooseMinPrice = (e) => {
     setMinRange(e.target.value);
@@ -22,7 +24,7 @@ function Search(props) {
   };
 
   const searchDetail = () => {
-    props.loadData(1, "", filterCategory, minRange, maxRange);
+    return contextValue;
   };
 
   return (
