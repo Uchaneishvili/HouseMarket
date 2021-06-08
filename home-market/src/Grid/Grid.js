@@ -141,10 +141,6 @@ function Grid() {
         loadData={clearAndLoadData}
         detailSearchIsOpen={detailSearchIsOpen}
       />
-      {/* <Search
-        loadData={clearAndLoadData}
-        detailSearchIsOpen={detailSearchIsOpen}
-      /> */}
       <div className="container grid-container">
         <Sort sort={sort} sortType={sortType} setSortType={setSortType} />
 

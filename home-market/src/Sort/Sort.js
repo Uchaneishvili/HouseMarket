@@ -31,7 +31,9 @@ function Sort(props) {
     <div className="container">
       <div className="sort-dropdown-container">
         <div className="sort-dropdown" onClick={rotateIcon}>
-          სორტირება
+          {props.sortType == 0 ? "სორტირება" : ""}
+          {props.sortType == 1 ? "ფასის ზრდადობით" : ""}
+          {props.sortType == 2 ? "ფასის კლებადობით" : ""}
           <img
             className={sortState ? "sort-icon" : "sort-icon rotate"}
             alt="sort-icon"
