@@ -54,9 +54,10 @@ function LoadContextProvider(props) {
     //   loadData(page, search, category, minPrice, maxPrice);
     // }, 1500);
   };
+
   return (
     <div>
-      <loadDataContext.Provider value={"hello world"}>
+      <loadDataContext.Provider value={function clearAndLoadData() {}}>
         {props.children}
       </loadDataContext.Provider>
     </div>

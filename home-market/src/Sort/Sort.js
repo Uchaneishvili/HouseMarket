@@ -1,13 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Sort.css";
 
-function Sort() {
+function Sort(props) {
   const [sortState, setSortState] = useState(false);
 
   const rotateIcon = () => {
     setSortState(!sortState);
     console.log(sortState);
   };
+
+  const defaultSort = () => {
+    props.setSortType(0); //Default Sorting
+  };
+
+  const priceAscSort = () => {
+    props.setSortType(1); // Ascend Sorting
+  };
+
+  const priceDescSort = () => {
+    props.setSortType(2); // Descend Sorting
+  };
+
+  useEffect(() => {
+    console.log(props.sortType);
+
+    props.sort();
+  }, [props.sortType]);
 
   return (
     <div className="container">
@@ -24,17 +42,29 @@ function Sort() {
         {sortState && (
           <ul className="dropdown-menu dropdown-list">
             <li>
-              <a className="dropdown-item" href="#">
+              <a
+                className="dropdown-item"
+                href="#"
+                onClick={() => defaultSort()}
+              >
                 სორტირება
               </a>
             </li>
             <li>
-              <a className="dropdown-item" href="#">
+              <a
+                className="dropdown-item"
+                href="#"
+                onClick={() => priceAscSort()}
+              >
                 ფასის ზრდადობით
               </a>
             </li>
             <li>
-              <a className="dropdown-item" href="#">
+              <a
+                className="dropdown-item"
+                href="#"
+                onClick={() => priceDescSort()}
+              >
                 ფასის კლებადობით
               </a>
             </li>

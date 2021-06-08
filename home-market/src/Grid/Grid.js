@@ -14,8 +14,19 @@ function Grid() {
   const [loadMore, setLoadMore] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [detailSearchIsOpen, setDetailSearchIsOpen] = useState(false);
+  const [sortType, setSortType] = useState(0);
 
   const contextValue = useContext(loadDataContext);
+
+  const sort = () => {
+    if (sortType == 1) {
+      clearAndLoadData(1, "", "price", "ascend");
+    } else if (sortType == 2) {
+      clearAndLoadData(1, "", "price", "descend");
+    } else if (sortType == 0) {
+      clearAndLoadData(1);
+    }
+  };
 
   useEffect(() => {
     loadData(1);
@@ -30,6 +41,8 @@ function Grid() {
   const clearAndLoadData = async (
     page,
     search,
+    sortField,
+    sortDirection,
     category,
     minPrice,
     maxPrice
@@ -43,6 +56,10 @@ function Grid() {
 
     if (category) {
       url += `&category=${category}`;
+    }
+
+    if (sortField) {
+      url += `&sortField=${sortField}&sortDirection=${sortDirection}`;
     }
 
     if (minPrice) {
@@ -71,10 +88,22 @@ function Grid() {
     // }, 1500);
   };
 
-  const loadData = async (page, search, category, minPrice, maxPrice) => {
+  const loadData = async (
+    page,
+    search,
+    sortField,
+    sortDirection,
+    category,
+    minPrice,
+    maxPrice
+  ) => {
     let url = `http://localhost:3001/homelist?page=${page}`;
     if (search) {
       url += `&search=${search}`;
+    }
+
+    if (sortField) {
+      url += `&sortField=${sortField}&sortDirection=${sortDirection}`;
     }
 
     if (category) {
@@ -117,7 +146,7 @@ function Grid() {
         detailSearchIsOpen={detailSearchIsOpen}
       /> */}
       <div className="container grid-container">
-        <Sort />
+        <Sort sort={sort} sortType={sortType} setSortType={setSortType} />
 
         <div className="cards-container">
           <InfiniteScroll
