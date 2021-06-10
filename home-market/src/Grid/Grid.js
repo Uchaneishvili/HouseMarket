@@ -3,14 +3,12 @@ import "./Grid.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "axios";
 import Navigation from "../Navigation/Navigation";
-import Search from "../Search/Search";
 import { Link } from "react-router-dom";
 import { loadDataContext } from "../loadContext";
-import Sort from "../Sort/Sort";
+import Outside from "../Sort/Outside";
 
 function Grid() {
   const [listOfHome, setListOfHome] = useState([]);
-  const [totalPages, setTotalPages] = useState();
   const [loadMore, setLoadMore] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [detailSearchIsOpen, setDetailSearchIsOpen] = useState(false);
@@ -19,11 +17,11 @@ function Grid() {
   const contextValue = useContext(loadDataContext);
 
   const sort = () => {
-    if (sortType == 1) {
+    if (sortType === 1) {
       clearAndLoadData(1, "", "price", "ascend");
-    } else if (sortType == 2) {
+    } else if (sortType === 2) {
       clearAndLoadData(1, "", "price", "descend");
-    } else if (sortType == 0) {
+    } else if (sortType === 0) {
       clearAndLoadData(1);
     }
   };
@@ -73,7 +71,6 @@ function Grid() {
     await axios.get(url).then((response) => {
       const newData = [...response.data.data];
       setListOfHome(newData);
-      setTotalPages(response.data.pages);
       setCurrentPage(response.data.page);
       const totalPagesData = response.data.pages;
       const currentPageData = response.data.page;
@@ -121,7 +118,6 @@ function Grid() {
     await axios.get(url).then((response) => {
       const newData = [...listOfHome, ...response.data.data];
       setListOfHome(newData);
-      setTotalPages(response.data.pages);
       setCurrentPage(response.data.page);
       const totalPagesData = response.data.pages;
       const currentPageData = response.data.page;
@@ -142,7 +138,7 @@ function Grid() {
         detailSearchIsOpen={detailSearchIsOpen}
       />
       <div className="container grid-container">
-        <Sort sort={sort} sortType={sortType} setSortType={setSortType} />
+        <Outside sort={sort} sortType={sortType} setSortType={setSortType} />
 
         <div className="cards-container">
           <InfiniteScroll
