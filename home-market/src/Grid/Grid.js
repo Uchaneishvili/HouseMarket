@@ -28,7 +28,6 @@ function Grid() {
 
   useEffect(() => {
     loadData(1);
-    console.log(contextValue);
   }, []);
 
   const nextLoad = () => {

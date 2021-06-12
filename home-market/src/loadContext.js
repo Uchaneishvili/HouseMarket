@@ -43,7 +43,6 @@ function LoadContextProvider(props) {
       setCurrentPage(response.data.page);
       const totalPagesData = response.data.pages;
       const currentPageData = response.data.page;
-      console.log(totalPages);
       if (totalPagesData > currentPageData) {
         setLoadMore(true);
       } else {
@@ -57,7 +56,7 @@ function LoadContextProvider(props) {
 
   return (
     <div>
-      <loadDataContext.Provider value={function clearAndLoadData() {}}>
+      <loadDataContext.Provider value={() => clearAndLoadData()}>
         {props.children}
       </loadDataContext.Provider>
     </div>

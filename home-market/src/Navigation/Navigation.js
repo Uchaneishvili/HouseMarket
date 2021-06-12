@@ -38,8 +38,6 @@ function Navigation(props) {
     window.scroll(0, 0);
   };
 
-  console.log(contextValue);
-
   return (
     <div className="header">
       <div className="container header-navigation">

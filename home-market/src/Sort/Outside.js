@@ -6,14 +6,12 @@ function Outside(props) {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
     rotateIcon();
-    console.log("tt");
   };
 
   Outside.handleClickOutside = () => setIsOpen(false);
 
   const rotateIcon = () => {
     setIsOpen(!isOpen);
-    console.log(isOpen);
   };
 
   const defaultSort = () => {
@@ -29,8 +27,6 @@ function Outside(props) {
   };
 
   useEffect(() => {
-    console.log(props.sortType);
-
     props.sort();
   }, [props.sortType]);
   return (

@@ -13,8 +13,6 @@ function Detail() {
     loadDetailData(lastSegment);
   }, []);
 
-  console.log(details);
-
   const loadDetailData = async (id) => {
     let url = `http://localhost:3001/homelist/${id}`;
     await axios.get(url).then((response) => {
