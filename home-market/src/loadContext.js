@@ -5,7 +5,7 @@ export const loadDataContext = createContext();
 
 function LoadContextProvider(props) {
   const [totalPages, setTotalPages] = useState();
-  const [listOfHome, setListOfHome] = useState([]);
+  const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loadMore, setLoadMore] = useState();
   const [detailSearch, setDetailSearch] = useState(false);
@@ -17,7 +17,7 @@ function LoadContextProvider(props) {
     minPrice,
     maxPrice
   ) => {
-    setListOfHome([]);
+    setProducts([]);
 
     let url = `http://localhost:3001/homelist?page=${page}`;
     if (search) {
@@ -37,8 +37,8 @@ function LoadContextProvider(props) {
     }
 
     await axios.get(url).then((response) => {
-      const newData = [...response.data.data];
-      setListOfHome(newData);
+      const newProductData = [...response.data.data];
+      setProducts(newProductData);
       setTotalPages(response.data.pages);
       setCurrentPage(response.data.page);
       const totalPagesData = response.data.pages;
@@ -56,7 +56,9 @@ function LoadContextProvider(props) {
 
   return (
     <div>
-      <loadDataContext.Provider value={() => clearAndLoadData()}>
+      <loadDataContext.Provider
+        value={{ clearAndLoadData: clearAndLoadData, products: products }}
+      >
         {props.children}
       </loadDataContext.Provider>
     </div>

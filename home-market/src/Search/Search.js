@@ -24,7 +24,7 @@ function Search(props) {
   };
 
   const searchDetail = () => {
-    return contextValue;
+    return contextValue.clearAndLoadData();
   };
 
   return (

@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
-import onClickOutside from "react-onclickoutside";
+import React, { useState, useEffect, useRef } from "react";
 import "./Outside.css";
 
 function Outside(props) {
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef();
+
   const toggle = () => {
     rotateIcon();
   };
 
   Outside.handleClickOutside = () => setIsOpen(false);
+
+  useOnClickOutside(ref, () => setIsOpen(false));
 
   const rotateIcon = () => {
     setIsOpen(!isOpen);
@@ -33,6 +36,7 @@ function Outside(props) {
     <div
       className={isOpen ? "m-menu -active" : "m-menu "}
       onClick={() => setIsOpen(!isOpen)}
+      ref={ref}
     >
       <div className="sort-title-container">
         <div className="sort-title" onClick={toggle}>
@@ -65,8 +69,21 @@ function Outside(props) {
   );
 }
 
-const clickOutsideConfig = {
-  handleClickOutside: () => Outside.handleClickOutside,
-};
+function useOnClickOutside(ref, handler) {
+  useEffect(() => {
+    const listener = (event) => {
+      if (!ref.current || ref.current.contains(event.target)) {
+        return;
+      }
+      handler(event);
+    };
+    document.addEventListener("mousedown", listener);
+    document.addEventListener("touchstart", listener);
+    return () => {
+      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("touchstart", listener);
+    };
+  }, [ref, handler]);
+}
 
-export default onClickOutside(Outside, clickOutsideConfig);
+export default Outside;

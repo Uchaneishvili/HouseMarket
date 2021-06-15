@@ -14,7 +14,11 @@ function Grid() {
   const [detailSearchIsOpen, setDetailSearchIsOpen] = useState(false);
   const [sortType, setSortType] = useState(0);
 
-  const contextValue = useContext(loadDataContext);
+  const { products } = useContext(loadDataContext);
+
+  useEffect(() => {
+    setListOfHome(products);
+  }, [products]);
 
   const sort = () => {
     if (sortType === 1) {
