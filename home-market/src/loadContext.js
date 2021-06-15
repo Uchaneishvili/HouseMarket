@@ -8,7 +8,6 @@ function LoadContextProvider(props) {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loadMore, setLoadMore] = useState();
-  const [detailSearch, setDetailSearch] = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
 

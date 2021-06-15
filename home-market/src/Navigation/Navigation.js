@@ -20,7 +20,6 @@ function Navigation() {
 
   const searchOnclick = () => {
     contextValue.setIsOpen(true);
-    console.log("detail Search is Open");
   };
 
   const onMainTitle = () => {
