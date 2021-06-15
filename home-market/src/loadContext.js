@@ -10,6 +10,8 @@ function LoadContextProvider(props) {
   const [loadMore, setLoadMore] = useState();
   const [detailSearch, setDetailSearch] = useState(false);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const clearAndLoadData = async (
     page,
     search,
@@ -49,15 +51,17 @@ function LoadContextProvider(props) {
         setLoadMore(false);
       }
     });
-    // setTimeout(() => {
-    //   loadData(page, search, category, minPrice, maxPrice);
-    // }, 1500);
   };
 
   return (
     <div>
       <loadDataContext.Provider
-        value={{ clearAndLoadData: clearAndLoadData, products: products }}
+        value={{
+          clearAndLoadData: clearAndLoadData,
+          products: products,
+          setIsOpen: setIsOpen,
+          isOpen: isOpen,
+        }}
       >
         {props.children}
       </loadDataContext.Provider>

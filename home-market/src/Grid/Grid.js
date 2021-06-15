@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import "./Grid.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "axios";
@@ -11,8 +11,8 @@ function Grid() {
   const [listOfHome, setListOfHome] = useState([]);
   const [loadMore, setLoadMore] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [detailSearchIsOpen, setDetailSearchIsOpen] = useState(false);
   const [sortType, setSortType] = useState(0);
+  const [isOpen, setIsOpen] = useState();
 
   const { products } = useContext(loadDataContext);
 
@@ -83,9 +83,6 @@ function Grid() {
         setLoadMore(false);
       }
     });
-    // setTimeout(() => {
-    //   loadData(page, search, category, minPrice, maxPrice);
-    // }, 1500);
   };
 
   const loadData = async (
@@ -138,7 +135,8 @@ function Grid() {
       <Navigation
         setListOfHome={setListOfHome}
         loadData={clearAndLoadData}
-        detailSearchIsOpen={detailSearchIsOpen}
+        detailSearchIsOpen={isOpen}
+        setDetailSearchIsOpen={setIsOpen}
       />
       <div className="container grid-container">
         <Outside sort={sort} sortType={sortType} setSortType={setSortType} />

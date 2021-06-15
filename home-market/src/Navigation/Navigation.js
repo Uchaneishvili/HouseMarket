@@ -5,9 +5,8 @@ import { loadDataContext } from "../loadContext";
 import Search from "../Search/Search";
 import { Link } from "react-router-dom";
 
-function Navigation(props) {
+function Navigation() {
   const [openPopup, setOpenPopup] = useState(false);
-  const [detailSearch, setDetailSearch] = useState(false);
   const [search, setSearch] = useState("");
   const contextValue = useContext(loadDataContext);
 
@@ -19,13 +18,9 @@ function Navigation(props) {
     setOpenPopup(false);
   };
 
-  const searchOnclick = (e) => {
-    setDetailSearch(true);
-  };
-
-  const onSearch = () => {
-    setDetailSearch(false);
-    return contextValue;
+  const searchOnclick = () => {
+    contextValue.setIsOpen(true);
+    console.log("detail Search is Open");
   };
 
   const onMainTitle = () => {
@@ -56,7 +51,7 @@ function Navigation(props) {
             onClick={() => searchOnclick()}
             onChange={(event) => setSearch(event.target.value)}
           />
-          <div className="search-icon-container" onClick={onSearch}>
+          <div className="search-icon-container">
             <img
               src="https://firebasestorage.googleapis.com/v0/b/home-market-98990.appspot.com/o/search-icon.svg?alt=media&token=d55be6c1-3e62-4cc7-8f7d-53230907a9b9"
               className="search-main-icon"
@@ -78,7 +73,7 @@ function Navigation(props) {
         </button>
       </div>
       <CreateNew openPopup={openPopup} exitModalFnct={exitModalFnct} />
-      {detailSearch ? <Search /> : ""}
+      {contextValue.isOpen ? <Search /> : ""}
     </div>
   );
 }

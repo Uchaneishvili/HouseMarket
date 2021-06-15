@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { loadDataContext } from "../loadContext";
 import "./Search.css";
 
@@ -7,7 +7,9 @@ function Search(props) {
   const [maxRange, setMaxRange] = useState(100);
   const [isSelectedCategory, setIsSelectedCategory] = useState("");
   const [filterCategory, setFilterCategory] = useState();
+  const [isOpen, setIsOpen] = useState();
   const contextValue = useContext(loadDataContext);
+  const ref = useRef();
 
   const chooseMinPrice = (e) => {
     setMinRange(e.target.value);
@@ -18,17 +20,19 @@ function Search(props) {
   };
 
   const handleCategory = (title) => {
-    // setCategoryName(title);
     setIsSelectedCategory(title);
     setFilterCategory(title);
   };
 
+  useOnClickOutside(ref, () => contextValue.setIsOpen(false));
+
   const searchDetail = () => {
+    contextValue.setIsOpen(false);
     return contextValue.clearAndLoadData();
   };
 
   return (
-    <div className="container">
+    <div className="container" ref={ref}>
       <div className="search-container-with-button">
         <div className="search-container">
           <div className="range-container">
@@ -120,6 +124,23 @@ function Search(props) {
       </div>
     </div>
   );
+}
+
+function useOnClickOutside(ref, handler) {
+  useEffect(() => {
+    const listener = (event) => {
+      if (!ref.current || ref.current.contains(event.target)) {
+        return;
+      }
+      handler(event);
+    };
+    document.addEventListener("mousedown", listener);
+    document.addEventListener("touchstart", listener);
+    return () => {
+      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("touchstart", listener);
+    };
+  }, [ref, handler]);
 }
 
 export default Search;
