@@ -5,6 +5,8 @@ const app = express();
 const homeModel = require("./Models/Home.js");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const rp = require("request-promise");
+const cheerio = require("cheerio");
 
 app.use(express.json());
 app.use(cors());
@@ -15,6 +17,38 @@ mongoose.connect(
     useNewUrlParser: true,
   }
 );
+
+const options = {
+  url: "https://livo.ge/api/statements/map-data?deal_types=1&cities=1",
+  json: true,
+};
+
+let productData = [];
+let dataLength = 0;
+
+rp(options)
+  .then((data) => {
+    for (let product of data.data) {
+      productData.push({
+        _id: product.id,
+        address: product.address,
+        name: product.dynamic_title,
+        image:
+          product.images[0] ||
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png",
+        price: 25000,
+        area: 80,
+        floor: 11,
+        rooms: 3,
+        desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      });
+    }
+    dataLength = data.data.length;
+    console.log(dataLength);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
 const swaggerOption = {
   swagger: "2.0",
@@ -104,24 +138,37 @@ app.get("/homelist", async (req, res) => {
       sortInHome[sortField] = sortDirection === "ascend" ? 1 : -1;
     }
 
+    // const page = parseInt(req.query.page) || 1;
+    // const pageSize = parseInt(req.query.pageSize) || 12;
+    // const skip = (page - 1) * pageSize;
+    // const total = await homeModel.countDocuments();
+    // const pages = Math.ceil(total / pageSize);
+
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 12;
     const skip = (page - 1) * pageSize;
-    const total = await homeModel.countDocuments(q);
-    const pages = Math.ceil(total / pageSize);
+    // const total = productData.countDocument(q);
+    // const total = await productData.length;
+    // const pages = Math.ceil(total / pageSize);
 
-    const result = await homeModel
-      .find(q)
-      .sort(sortInHome)
-      .skip(skip)
-      .limit(pageSize);
+    const transportedData = await productData;
+    // .find(q)
+    // .sort(sortInHome);
+    // .skip(skip)
+    // .limit(pageSize);
+
+    // const result = await productData
+    //   .find(q)
+    //   .sort(sortInHome)
+    //   .skip(skip)
+    //   .limit(pageSize);
 
     res.status(200).json({
       status: "Success",
-      count: total,
-      pages,
-      page,
-      data: result,
+      // count: total,
+      // pages,
+      // page,
+      data: transportedData,
     });
   } catch (error) {
     console.log(error);
