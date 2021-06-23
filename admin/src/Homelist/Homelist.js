@@ -137,6 +137,8 @@ function Homelist() {
     loadData(pagination.current, "", sorter.field, sorter.order, filters);
   };
 
+  console.log(current);
+
   return (
     <div>
       <div className="breadcrumbs-container">
@@ -180,7 +182,7 @@ function Homelist() {
             style={{ marginTop: 20 }}
             dataSource={homeData}
             rowKey={(home) => home._id}
-            pagination={{ current: current, pageSize: 12, total: total }}
+            pagination={{ current: current, pageSize: 24, total: total }}
             onChange={handleTableChange}
           />
         </div>

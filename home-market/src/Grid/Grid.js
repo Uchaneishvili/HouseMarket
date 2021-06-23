@@ -37,6 +37,7 @@ function Grid() {
   const nextLoad = () => {
     setTimeout(() => {
       loadData(currentPage + 1);
+      console.log(currentPage + 1);
     }, 1500);
   };
   const clearAndLoadData = async (
@@ -121,6 +122,7 @@ function Grid() {
       setCurrentPage(response.data.page);
       const totalPagesData = response.data.pages;
       const currentPageData = response.data.page;
+      console.log(currentPage);
 
       if (totalPagesData > currentPageData) {
         setLoadMore(true);
@@ -130,6 +132,7 @@ function Grid() {
     });
   };
 
+  console.log(listOfHome);
   return (
     <div>
       <Navigation
@@ -143,7 +146,7 @@ function Grid() {
 
         <div className="cards-container">
           <InfiniteScroll
-            pageStart={0}
+            pageStart={1}
             dataLength={listOfHome.length}
             next={() => nextLoad()}
             style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
