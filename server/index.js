@@ -45,9 +45,15 @@ request(
     if (!error && response.statusCode == 200) {
       const $ = cheerio.load(html);
 
-      const cardTitleText = $(".latest_title").text();
+      const cardTitleText = $(".latest_title").text(); // ქარდის სათაური
 
-      // console.log(cardTitleText);
+      const descriptionText = $(".DescripTionListB").text(); // აღწერა
+
+      const priceText = $(".latest_price").text();
+
+      const areaText = $(".latest_flat_km").text();
+
+      const addressText = $(".StreeTaddressList").text();
     }
   }
 );
@@ -227,7 +233,6 @@ app.post("/addhome", async (req, res) => {
     price: price,
   });
 
-  console.log(homes.name);
   try {
     await homes.save();
     res.send("inserted Data 2");
