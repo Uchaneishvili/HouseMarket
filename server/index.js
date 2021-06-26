@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const homeModel = require("./Models/Home.js");
+const productModel = require("./Models/Product.js");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const got = require("got");
@@ -38,25 +38,6 @@ const swaggerOption = {
   // ['.routes/*js]
   apis: ["index.js"],
 };
-
-request(
-  "https://ss.ge/ka/udzravi-qoneba/l/kerdzo-saxli/iyideba",
-  (error, request, html) => {
-    if (!error && response.statusCode == 200) {
-      const $ = cheerio.load(html);
-
-      const cardTitleText = $(".latest_title").text(); // ქარდის სათაური
-
-      const descriptionText = $(".DescripTionListB").text(); // აღწერა
-
-      const priceText = $(".latest_price").text();
-
-      const areaText = $(".latest_flat_km").text();
-
-      const addressText = $(".StreeTaddressList").text();
-    }
-  }
-);
 
 const swaggerDocs = swaggerJsDoc(swaggerOption);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
@@ -123,7 +104,7 @@ app.get("/homelist", async (req, res) => {
       }
     }
 
-    // homeModel.title = cardTitleText;
+    // productModel.title = cardTitleText;
 
     const sortInHome = {};
 
@@ -134,10 +115,10 @@ app.get("/homelist", async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 12;
     const skip = (page - 1) * pageSize;
-    const total = await homeModel.countDocuments();
+    const total = await productModel.countDocuments();
     const pages = Math.ceil(total / pageSize);
 
-    const result = await homeModel
+    const result = await productModel
       .find(q)
       .sort(sortInHome)
       .skip(skip)
@@ -145,7 +126,7 @@ app.get("/homelist", async (req, res) => {
 
     res.status(200).json({
       status: "Success",
-      total,
+      count: total,
       pageSize,
       page,
       pages,
@@ -206,41 +187,87 @@ app.get("/homelist", async (req, res) => {
  *           description: Created
  */
 
-app.post("/addhome", async (req, res) => {
-  const {
-    image,
-    name,
-    room,
-    floor,
-    area,
-    address,
-    desc,
-    price,
-    typeCard,
-    category,
-  } = req.body;
+request(
+  "https://ss.ge/ka/udzravi-qoneba/l/kerdzo-saxli/iyideba",
 
-  const homes = new homeModel({
-    category: category,
-    typeCard: typeCard,
-    image: image,
-    name: name,
-    room: room,
-    floor: floor,
-    area: area,
-    address: address,
-    desc: desc,
-    price: price,
-  });
+  (error, request, html) => {
+    if (!error && response.statusCode == 200) {
+      const $ = cheerio.load(html);
 
-  try {
-    await homes.save();
-    res.send("inserted Data 2");
-  } catch (error) {
-    console.log(error);
-    res.send(error);
+      const cardTitleText = $(".latest_title").text(); // ქარდის სათაური
+
+      const descriptionText = $(".DescripTionListB").text(); // აღწერა
+
+      const priceText = $(".latest_price").text();
+
+      const areaText = $(".latest_flat_km").text();
+
+      const addressText = $(".StreeTaddressList").text();
+
+      let splittedName = cardTitleText.split("\n");
+      let splittedDesc = descriptionText.split("\n");
+      let splittedPrice = priceText.split("\n");
+      let splittedArea = areaText.split("\n");
+      let splittedAddress = addressText.split("\n");
+
+      app.post("/addhome", async (req, res) => {
+        const {
+          image,
+          // name,
+          room,
+          floor,
+          area,
+          address,
+          desc,
+          price,
+          typeCard,
+          category,
+        } = req.body;
+
+        let no = 0;
+
+        try {
+          for (let i = 1; i < splittedName.length; i = i + 4) {
+            // console.log(splittedName[i]);
+            // console.log(splittedArea[i]);
+            // console.log(splittedAddress[i]);
+            // console.log(splittedDesc[i]);
+            // console.log(splittedPrice[i]);
+
+            console.log(i, splittedName[i]);
+            if (
+              splittedName[i] !== "" &&
+              splittedArea[i] !== "" &&
+              splittedAddress[i] !== "" &&
+              splittedDesc[i] !== "" &&
+              splittedPrice[i] !== ""
+            ) {
+              const productRecord = new productModel({
+                no: no++,
+                category: category,
+                typeCard: typeCard,
+                image: image,
+                name: splittedName[i],
+                room: room,
+                floor: floor,
+                area: splittedArea[i],
+                address: splittedAddress[i],
+                desc: splittedDesc[i],
+                price: splittedPrice[i],
+              });
+              await productRecord.save();
+            }
+          }
+
+          res.send("inserted Data 2");
+        } catch (error) {
+          console.log(error);
+          res.send(error);
+        }
+      });
+    }
   }
-});
+);
 
 /**
  *  @swagger
@@ -266,7 +293,7 @@ app.post("/addhome", async (req, res) => {
 app.delete("/delete/:id", async (req, res) => {
   const id = req.params.id;
 
-  await homeModel.findByIdAndRemove(id).exec();
+  await productModel.findByIdAndRemove(id).exec();
 
   res.send("deleted");
 });
@@ -295,7 +322,7 @@ app.delete("/delete/:id", async (req, res) => {
 app.get("/homelist/:id", (req, res) => {
   const id = req.params.id;
 
-  homeModel.findById(id, (err, result) => {
+  productModel.findById(id, (err, result) => {
     if (err) {
       res.send(err);
     }

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const homeSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
@@ -25,21 +25,24 @@ const homeSchema = new mongoose.Schema({
     required: true,
   },
   area: {
-    type: Number,
+    type: String,
   },
 
   address: {
     type: String,
-    required: true,
   },
   desc: {
     type: String,
   },
   price: {
-    type: Number,
+    type: String,
     // required: true,
+  },
+  no: {
+    type: Number,
+    required: true,
   },
 });
 
-const Homes = mongoose.model("Homes", homeSchema);
-module.exports = Homes;
+const product = mongoose.model("Products", productSchema);
+module.exports = product;

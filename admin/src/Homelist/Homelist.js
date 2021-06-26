@@ -137,8 +137,6 @@ function Homelist() {
     loadData(pagination.current, "", sorter.field, sorter.order, filters);
   };
 
-  console.log(current);
-
   return (
     <div>
       <div className="breadcrumbs-container">
