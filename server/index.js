@@ -11,6 +11,7 @@ const request = require("request-promise");
 const cheerio = require("cheerio");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
+var Scraper = require("images-scraper");
 
 app.use(express.json());
 app.use(cors());
@@ -187,10 +188,19 @@ app.get("/homelist", async (req, res) => {
  *           description: Created
  */
 
-request(
-  "https://ss.ge/ka/udzravi-qoneba/l/kerdzo-saxli/iyideba",
+// const scraper = new Scraper(
+//   "https://ss.ge/ka/udzravi-qoneba/l/kerdzo-saxli/iyideba"
+// );
 
-  (error, request, html) => {
+// scraper.on("image", function (image) {
+//   console.log(image.extension);
+//   image.save();
+// });
+
+request(
+  `https://ss.ge/ka/udzravi-qoneba/l/kerdzo-saxli/iyideba?Page=1&RealEstateTypeId=4&RealEstateDealTypeId=4`,
+
+  (error, html) => {
     if (!error && response.statusCode == 200) {
       const $ = cheerio.load(html);
 
@@ -211,30 +221,11 @@ request(
       let splittedAddress = addressText.split("\n");
 
       app.post("/addhome", async (req, res) => {
-        const {
-          image,
-          // name,
-          room,
-          floor,
-          area,
-          address,
-          desc,
-          price,
-          typeCard,
-          category,
-        } = req.body;
-
+        const { image, room, floor, typeCard, category } = req.body;
         let no = 0;
 
         try {
-          for (let i = 1; i < splittedName.length; i = i + 4) {
-            // console.log(splittedName[i]);
-            // console.log(splittedArea[i]);
-            // console.log(splittedAddress[i]);
-            // console.log(splittedDesc[i]);
-            // console.log(splittedPrice[i]);
-
-            console.log(i, splittedName[i]);
+          for (let i = 1; i <= splittedName.length; i = i + 4) {
             if (
               splittedName[i] !== "" &&
               splittedArea[i] !== "" &&
@@ -253,7 +244,7 @@ request(
                 area: splittedArea[i],
                 address: splittedAddress[i],
                 desc: splittedDesc[i],
-                price: splittedPrice[i],
+                price: splittedPrice[i].slice(0, -1),
               });
               await productRecord.save();
             }
